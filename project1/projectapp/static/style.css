@@ -1,0 +1,52 @@
+body {
+  background-image: url(".jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
+.login-form {
+  border: 1px solid;
+  backdrop-filter: blur(2px);
+  box-shadow: 5px 5px 5px 2px;
+}
+
+.signup-form {
+  border: 1px solid;
+  backdrop-filter: blur(2px);
+  box-shadow: 5px 5px 5px 2px;
+}
+
+.password {
+  margin-top: 7px;
+  padding-left: 5px;
+}
+
+input[type="text"],
+input[type="password"] {
+  background: transparent;
+  margin-bottom: 10px;
+}
+
+.form-field {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 2px;
+}
+
+/* Label styles */
+.form-label {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+/* Input styles */
+.form-input {
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.alert {
+  color: #00ff00; /* White text color */
+}

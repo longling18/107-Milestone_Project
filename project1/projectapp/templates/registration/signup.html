@@ -1,0 +1,100 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sign Up</title>
+    {% load bootstrap5 %} {% bootstrap_css %}
+    <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}" />
+  </head>
+  <body>
+    <div
+      class="container d-flex justify-content-center align-items-center vh-100"
+    >
+      <div class="signup-form p-4 rounded text-black">
+        <h1 class="text-center py-3">Sign Up</h1>
+        <form action="{% url 'signup' %}" method="post">
+          {% csrf_token %}
+
+          <!-- Username Field -->
+          <div class="form-field signup">
+            <label
+              for="{{ user_form.username.id_for_label }}"
+              class="form-label"
+              >Username:</label
+            >
+            {{ user_form.username }} {% if user_form.username.errors %}
+            <div class="text-danger">{{ user_form.username.errors.0 }}</div>
+            {% endif %}
+          </div>
+
+          <!-- First Name Field -->
+          <div class="form-field signup">
+            <label
+              for="{{ user_form.first_name.id_for_label }}"
+              class="form-label"
+              >First Name:</label
+            >
+            {{ user_form.first_name }} {% if user_form.first_name.errors %}
+            <div class="text-danger">{{ user_form.first_name.errors.0 }}</div>
+            {% endif %}
+          </div>
+
+          <!-- Last Name Field -->
+          <div class="form-field">
+            <label
+              for="{{ user_form.last_name.id_for_label }}"
+              class="form-label"
+              >Last Name:</label
+            >
+            {{ user_form.last_name }} {% if user_form.last_name.errors %}
+            <div class="text-danger">{{ user_form.last_name.errors.0 }}</div>
+            {% endif %}
+          </div>
+
+          <!-- Email Field -->
+          <div class="form-field">
+            <label for="{{ user_form.email.id_for_label }}" class="form-label"
+              >Email:</label
+            >
+            {{ user_form.email }} {% if user_form.email.errors %}
+            <div class="text-danger">{{ user_form.email.errors.0 }}</div>
+            {% endif %}
+          </div>
+
+          <!-- Password Field -->
+          <div class="form-field">
+            <label
+              for="{{ user_form.password1.id_for_label }}"
+              class="form-label"
+              >Password:</label
+            >
+            {{ user_form.password1 }} {% if user_form.password1.errors %}
+            <div class="text-danger">{{ user_form.password1.errors.0 }}</div>
+            {% endif %}
+          </div>
+
+          <!-- Repeat Password Field -->
+          <div class="form-field">
+            <label
+              for="{{ user_form.password2.id_for_label }}"
+              class="form-label"
+              >Confirm Password:</label
+            >
+            {{ user_form.password2 }} {% if user_form.password2.errors %}
+            <div class="text-danger">{{ user_form.password2.errors.0 }}</div>
+            {% endif %}
+          </div>
+
+          <!-- Sign Up Button -->
+          <div class="text-center mt-3">
+            <button type="submit" class="btn btn-primary">Sign Up</button>
+          </div>
+        </form>
+
+        <p>Already have an account? <a href="{% url 'login' %}">Login</a></p>
+      </div>
+    </div>
+  </body>
+</html>

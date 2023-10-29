@@ -1,0 +1,107 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Login</title>
+    <!---Custom CSS File--->
+    {% load bootstrap5 %} {% bootstrap_css %}
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{% static 'loginstyle.css' %}"
+    />
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+  </head>
+  <body>
+    <section id="log">
+      <div class="container" data-aos="fade-in">
+        <input type="checkbox" id="check" />
+        <div class="login form">
+          <header>Log in</header>
+          {% if messages %}
+          <div class="text-center">
+            {% for message in messages %}
+            <p
+              class="alert {% if 'error' in message.tags %}text-danger error-message{% endif %}{% if 'logout' in message.tags %}text-success{% endif %}"
+            >
+              {{ message }}
+            </p>
+            {% endfor %}
+          </div>
+          {% endif %}
+          <form class="space-y-6" action="{% url 'login' %}" method="post">
+            {% csrf_token %}
+            <input type="hidden" name="next" value="{{ next }}" />
+
+            <!-- Username Field -->
+            <div class="username">
+              <label
+                for="{{ form.username.id_for_label }}"
+                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                >Username:</label
+              >
+              {{ form.username }}
+            </div>
+
+            <!-- Password Field -->
+            <div class="password">
+              <label
+                for="password"
+                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                >Password</label
+              >
+              <input
+                type="password"
+                name="password"
+                id="password"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+                required
+              />
+            </div>
+
+            <!-- reCAPTCHA -->
+            <div
+              class="g-recaptcha mb-3"
+              data-sitekey="6LdoRE0oAAAAAK0XwRm4zKRREvHyzDweAsK0qXPO"
+            ></div>
+
+            <a
+              href="{% url 'password_reset' %}"
+              class="text-sm text-blue-700 hover:underline dark:text-blue-500"
+              >Forget Password?</a
+            >
+            <input type="submit" class="button" value="Login" />
+          </form>
+        </div>
+      </div>
+    </section>
+  </body>
+  <script>
+    /*const passwordField = document.querySelector("#id_password");
+    const showPasswordCheckbox = document.querySelector("#show-password");
+
+    showPasswordCheckbox.addEventListener("change", function () {
+      passwordField.type = this.checked ? "text" : "password";
+    });*/
+    function fadeOutErrorMessages() {
+      const errorMessages = document.querySelectorAll(".error-message");
+      errorMessages.forEach((errorMessage) => {
+        setTimeout(() => {
+          errorMessage.style.opacity = "0";
+          setTimeout(() => {
+            errorMessage.style.display = "none";
+          }, 500); // Adjust the fade-out duration (in milliseconds)
+        }, 5000); // Adjust the time before messages start to fade out (in milliseconds)
+      });
+    }
+
+    // Call the fadeOutErrorMessages function when the document is ready
+    document.addEventListener("DOMContentLoaded", function () {
+      fadeOutErrorMessages();
+    });
+  </script>
+  <script src="https://www.google.com/recaptcha/api.js?render=6LdoRE0oAAAAAK0XwRm4zKRREvHyzDweAsK0qXPO"></script>
+</html>

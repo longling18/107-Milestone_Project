@@ -1,0 +1,113 @@
+{% load static %} {% load bootstrap5 %} {% bootstrap_css %}
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Feedback Form</title>
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{% static 'assets/css/form.css' %}"
+    />
+  </head>
+  <body>
+    <div class="feedback-form">
+      <div class="container">
+        <div class="close-icon" onclick="closeForm()">X</div>
+        <form id="feedbackForm" style="margin: 0 auto">
+          <h3>Feedback Form</h3>
+
+          <input type="text" name="name" placeholder="Name (optional)" />
+
+          <div class="choices">
+            <label>Anonymous:</label>
+            <input
+              type="radio"
+              id="anonymous"
+              name="visibility"
+              value="anonymous"
+              checked
+            />
+            <label for="anonymous">Yes</label>
+
+            <input
+              type="radio"
+              id="notAnonymous"
+              name="visibility"
+              value="notAnonymous"
+            />
+            <label for="notAnonymous">No</label>
+          </div>
+
+          <div class="feedback">
+            <label for="feedback">Feedback:</label>
+            <textarea
+              id="feedback"
+              name="feedback"
+              rows="3"
+              required
+            ></textarea>
+          </div>
+
+          <input type="submit" value="Submit" />
+        </form>
+      </div>
+
+      <!-- Modal is centered with this class -->
+      <div class="modal" id="myModal">
+        <div class="modal-content">
+          <span class="close" onclick="closeModal()">&times;</span>
+          <p id="modalMessage"></p>
+          <button class="submit-button" onclick="resetForm()">Submit Another</button>
+          <button class="close-button" onclick="closeM()">Close</button>
+        </div>
+      </div>
+      
+
+    <script>
+      function closeForm() {
+        document.querySelector(".feedback-form").style.display = "none";
+      }
+      function closeForm() {
+        window.location.href = "{% url 'index' %}";
+      }
+      function closeModal() {
+        document.getElementById("myModal").style.display = "none";
+      }
+
+      function closeM() {
+        document.querySelector(".feedback-form").style.display = "none";
+      }
+      function closeM() {
+        // Change the window's location to the URL defined in your Django app's urls.py
+        window.location.href = "{% url 'index' %}";
+      }
+
+      function resetForm() {
+        document.getElementById("feedbackForm").reset();
+        closeModal();
+      }
+
+      document
+        .getElementById("feedbackForm")
+        .addEventListener("submit", function (event) {
+          event.preventDefault();
+
+          const name = document.querySelector('input[name="name"]').value;
+          const visibility = document.querySelector(
+            'input[name="visibility"]:checked'
+          ).value;
+          const feedback = document.getElementById("feedback").value;
+
+          let message = "Thank you for your feedback. ";
+          if (visibility === "anonymous") {
+            message += "Your feedback is anonymous.";
+          } else {
+            message += `Your name is ${name}.`;
+          }
+
+          document.getElementById("modalMessage").textContent = message;
+          document.getElementById("myModal").style.display = "block";
+        });
+    </script>
+  </body>
+</html>
