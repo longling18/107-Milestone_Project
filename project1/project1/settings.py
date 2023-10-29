@@ -145,7 +145,7 @@ LOGIN_URL = 'login'
 LOGIN_REDIRECT_URL = 'dashboard' 
 
 #Session time out
-AUTO_LOGOUT = {'IDLE_TIME': 900, 'REDIRECT_TO_LOGIN_IMMEDIATELY': True,
+AUTO_LOGOUT = {'IDLE_TIME': 15, 'REDIRECT_TO_LOGIN_IMMEDIATELY': True,
 
 'MESSAGE': 'The session has expired. Please login again to continue.',
 
