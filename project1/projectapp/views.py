@@ -6,8 +6,8 @@ from django.contrib.auth.views import LoginView, PasswordChangeView, PasswordRes
 #from django.contrib.auth.forms import UserCreationForm
 from django.urls import reverse_lazy
 from django.urls import reverse
-from .forms import CustomLoginForm
-#from django.contrib.auth.models import User
+from .forms import CustomLoginForm, StaffAddForm
+from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required, user_passes_test
 
 # Create your views here
@@ -22,8 +22,22 @@ def is_superuser(user):
 @login_required
 @user_passes_test(is_superuser)
 def admin_dashboard(request):
-    print(request.user)
-    return render(request, 'registration/admin_dashboard.html', {'section': 'admin_dashboard'})
+    users = User.objects.filter(is_staff=False)
+    if request.method == 'POST':
+        form = StaffAddForm(request.POST)
+        if form.is_valid():
+            user = form.save(commit=False)
+            user.set_password(form.cleaned_data['password'])
+            user.is_staff = False  # Set the user as staff
+            user.save()
+            return redirect('admin_dashboard')  # Redirect to the admin dashboard
+    else:
+        form = StaffAddForm()
+    context = {
+        'users': users,  # Pass the list of user objects to the template context
+        'form':form,
+    }
+    return render(request, 'registration/admin_dashboard.html', context )
 def is_not_superuser(user):
     return not user.is_superuser
 @login_required
@@ -123,3 +137,17 @@ class CustomPasswordResetView(PasswordResetView):
 
 class CustomPasswordResetDoneView(PasswordResetDoneView):
     template_name = 'password_reset_confirm.html'
+
+def add_staff(request):
+    if request.method == 'POST':
+        form = StaffAddForm(request.POST)
+        if form.is_valid():
+            user = form.save(commit=False)
+            user.set_password(form.cleaned_data['password'])
+            user.is_staff = True  # Set the user as staff
+            user.save()
+            return redirect('admin_dashboard')  # Redirect to the admin dashboard
+    else:
+        form = StaffAddForm()
+
+    return render(request, 'admin_dashboard.html', {'form': form})

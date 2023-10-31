@@ -21,6 +21,7 @@ class CustomLoginForm(AuthenticationForm):
 
         return cleaned_data
 
+'''
 class Signup(forms.ModelForm):
     password1 = forms.CharField(label='Password', widget=forms.PasswordInput)
     password2 = forms.CharField(label='Repeat Password', widget=forms.PasswordInput)
@@ -34,3 +35,8 @@ class Signup(forms.ModelForm):
         if cd['password1'] != cd['password2']:
             raise forms.ValidationError('Password don\'t match.')
         return cd['password2']
+'''
+class StaffAddForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ['first_name', 'last_name', 'email', 'username', 'password']
