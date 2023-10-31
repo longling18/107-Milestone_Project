@@ -6,9 +6,9 @@ urlpatterns = [
     path('', views.Index, name='index'),
     path('feedback_form/', views.feedback_form, name='feedback_form'),
     path('dashboard/', views.mydashboard, name='dashboard'),
+    path('admin_dashboard/', views.admin_dashboard, name='admin_dashboard'),
     path('login/', views.CustomLoginView.as_view(), name='login'),
     path('logout/', views.logout_user, name='logout'),
-    path('signup/', views.signup, name='signup'),
 
     #change password
     path('change_password/', views.CustomPasswordChangeView.as_view(), name='password_change'),
@@ -21,5 +21,5 @@ urlpatterns = [
     path('reset/done', auth_views.PasswordResetCompleteView.as_view(), name='password_reset_complete'),
     
     #create new User
-    path('signup/', views.signup, name='signup'),
+    #path('signup/', views.signup, name='signup'),
 ]

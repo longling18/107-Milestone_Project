@@ -1,12 +1,14 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required 
 from django.contrib import messages
-from django.contrib.auth import logout, authenticate, login
+from django.contrib.auth import logout, authenticate
 from django.contrib.auth.views import LoginView, PasswordChangeView, PasswordResetView, PasswordResetDoneView
-from django.contrib.auth.forms import UserCreationForm
+#from django.contrib.auth.forms import UserCreationForm
 from django.urls import reverse_lazy
+from django.urls import reverse
 from .forms import CustomLoginForm
-from django.contrib.auth.models import User
+#from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required, user_passes_test
 
 # Create your views here
 def Index(request):
@@ -15,8 +17,17 @@ def Index(request):
 def feedback_form(request):
     return render(request, 'registration/feedbackform.html', {'section': 'feedbackform'})
                   
+def is_superuser(user):
+    return user.is_superuser
 @login_required
-
+@user_passes_test(is_superuser)
+def admin_dashboard(request):
+    print(request.user)
+    return render(request, 'registration/admin_dashboard.html', {'section': 'admin_dashboard'})
+def is_not_superuser(user):
+    return not user.is_superuser
+@login_required
+@user_passes_test(is_not_superuser)
 def mydashboard(request):
     print(request.user)
     return render(request, 'registration/dashboard.html', {'section': 'dashboard'})
@@ -45,9 +56,9 @@ class CustomLoginView(LoginView):
      def get_success_url(self):
         user = self.request.user
         if user.is_superuser:
-            return '/admin/'  # Redirect superuser to the admin site
+            return reverse ('admin_dashboard')  # Redirect superuser to the admin site
         else:
-            return '/dashboard/'  # Redirect other users to the dashboard
+            return reverse ('dashboard')  # Redirect other users to the dashboard
 def login(request):
     return render(request, 'login.html', {'section': 'login'})
 
@@ -71,12 +82,11 @@ def logout_user(request):
     logout(request)
 
     #Redirect to the login html
-    return redirect('login')
-
+    return redirect('index')
+'''
 class CustomUserCreationForm(UserCreationForm):
     class Meta(UserCreationForm.Meta):
         fields = UserCreationForm.Meta.fields + ('first_name', 'last_name', 'email')
-
 def signup(request):
     if request.method == 'POST':
         user_form = CustomUserCreationForm(request.POST)
@@ -107,6 +117,7 @@ def signup(request):
         user_form = CustomUserCreationForm()
 
     return render(request, 'registration/signup.html', {'user_form': user_form})
+'''
 class CustomPasswordResetView(PasswordResetView):
     template_name = 'password_reset_form.html'
 

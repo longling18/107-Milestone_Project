@@ -14,7 +14,7 @@
       {% endfor %}
   </ul>
     <p><a href="{% url 'password_change' %}">Change password</a></p>
-    <a href="{% url 'logout' %}?next={% url 'login' %}">Logout</a>
+    <a href="{% url 'logout' %}?next={% url 'index' %}">Logout</a>
   </body>
 
   {{ redirect_to_login_immediately }}

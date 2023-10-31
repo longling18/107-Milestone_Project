@@ -32,6 +32,7 @@ INSTALLED_APPS = [
     'captcha',
     'django_otp',
     'django_otp.plugins.otp_totp',
+    'django_session_timeout'
 ]
 
 MIDDLEWARE = [
@@ -104,7 +105,10 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',  # Keep the default ModelBackend
+    'projectapp.custom_auth_backend.CustomBackend',  # Replace 'yourapp' with the actual app name
+]
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
 
@@ -142,14 +146,15 @@ SILENCED_SYSTEM_CHECKS = ['captcha.recaptcha_test_key_error']
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 LOGIN_URL = 'login'
-LOGIN_REDIRECT_URL = 'dashboard' 
-
 #Session time out
-AUTO_LOGOUT = {'IDLE_TIME': 15, 'REDIRECT_TO_LOGIN_IMMEDIATELY': True,
+
+AUTO_LOGOUT = {'IDLE_TIME': 900, 'REDIRECT_TO_LOGIN_IMMEDIATELY': True,
 
 'MESSAGE': 'The session has expired. Please login again to continue.',
-
 }
+
+SESSION_EXPIRE_SECONDS = 900 # 15 minutes (adjust this value as needed)
+SESSION_EXPIRE_AFTER_LAST_ACTIVITY = True
 
 #EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 #EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
