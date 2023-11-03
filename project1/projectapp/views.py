@@ -9,6 +9,7 @@ from django.urls import reverse
 from .forms import CustomLoginForm, StaffAddForm
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required, user_passes_test
+from django.http import JsonResponse
 
 # Create your views here
 def Index(request):
@@ -151,3 +152,20 @@ def add_staff(request):
         form = StaffAddForm()
 
     return render(request, 'admin_dashboard.html', {'form': form})
+
+def remove_staff_members(request):
+    if request.method == "POST":
+        user_ids = request.POST.getlist("user_ids[]")  # Get the selected user IDs
+
+        # Implement the logic to remove staff members based on user IDs
+        try:
+            # Convert the received user IDs to integers
+            user_ids = [int(user_id) for user_id in user_ids]
+            
+            # Use the User model to delete users with the given IDs
+            User.objects.filter(id__in=user_ids).delete()
+            
+            return JsonResponse({"message": "Staff members removed successfully"})
+        except ValueError:
+            return JsonResponse({"error": "Invalid user IDs provided"}, status=400)
+    return JsonResponse({"error": "Invalid request method"}, status=400)

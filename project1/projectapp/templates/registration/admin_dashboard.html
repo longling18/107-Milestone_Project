@@ -241,15 +241,16 @@
                                         List of Staff
                                       </h4>
                                     </div>
-                                    <div>
+                                      <div>
+                                          <button
+                                          class="btn btn-danger btn-lg text-white mb-0 me-0"
+                                          type="button"
+                                          id="removeStaffButton"
+                                        >
+                                          <i class="mdi mdi-account-minus"></i>Remove
+                                          staff
+                                        </button>
                                         <button
-                                        class="btn btn-danger btn-lg text-white mb-0 me-0"
-                                        type="button"
-                                      >
-                                        <i class="mdi mdi-account-minus"></i>Remove
-                                        staff
-                                      </button>
-                                      <button
                                         class="btn btn-primary btn-lg text-white mb-0 me-0"
                                         type="button" id="addStaffButton"
                                       >
@@ -308,6 +309,7 @@
                                                 <input
                                                   type="checkbox"
                                                   class="form-check-input"
+                                                  id="select-all-checkbox"
                                                   aria-checked="false" /><i
                                                   class="input-helper"
                                                 ></i
@@ -322,7 +324,7 @@
                                       </thead>
                                       <tbody>
                                         {% for user in users %}
-                                          <tr class="user-row">
+                                          <tr class="user-row" data-user-id="{{ user.id }}">
                                             <td>
                                               <div class="form-check form-check-flat mt-0">
                                                 <label class="form-check-label">
@@ -330,7 +332,8 @@
                                                     type="checkbox"
                                                     class="form-check-input"
                                                     aria-checked="false"
-                                                  /><i class="input-helper"></i>
+                                                  />
+                                                  <i class="input-helper"></i>
                                                 </label>
                                               </div>
                                             </td>
@@ -403,12 +406,62 @@
       type="text/javascript"
     ></script>
     <script src="{% static 'js/dashboard.js' %}"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
-        $(document).ready(function() {
-            $("#addStaffButton").click(function() {
-                $("#addStaffModal").modal("show");
-            });
+      // Add new staff member
+$(document).ready(function () {
+  $("#addStaffButton").click(function () {
+    $("#addStaffModal").modal("show");
+  });
+
+  // Select All checkbox
+  $("#select-all-checkbox").change(function () {
+    var isChecked = this.checked;
+    $(".user-row input[type=checkbox]").prop("checked", isChecked);
+  });
+
+  // Handle individual checkbox changes
+  $(".user-row input[type=checkbox]").change(function () {
+    if (!this.checked) {
+      $("#select-all-checkbox").prop("checked", false);
+    }
+  });
+
+  // Handle the click event of the "Remove" button
+  $("#removeStaffButton").click(function () {
+    var selectedUserIds = [];
+
+    $(".user-row input[type=checkbox]:checked").each(function () {
+      var userId = $(this).closest(".user-row").data("user-id");
+      selectedUserIds.push(userId);
+    });
+
+    if (selectedUserIds.length > 0) {
+      var confirmDelete = confirm(
+        "Are you sure you want to delete the selected staff members?"
+      );
+      if (confirmDelete) {
+        $.ajax({
+          type: "POST",
+          url: "/remove_staff_members/", // Update with your backend URL
+          data: {
+            user_ids: selectedUserIds,
+            csrfmiddlewaretoken: "{{ csrf_token }}", // If you're using Django templates
+          },
+          success: function (response) {
+            location.reload(); // Reload the page for simplicity
+          },
+          error: function (error) {
+            console.error("Error:", error);
+          },
         });
+      }
+    } else {
+      alert("Please select at least one staff member to remove.");
+    }
+  });
+});
+
     </script>
     <!-- End custom js for this page-->
   </body>

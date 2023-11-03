@@ -22,6 +22,7 @@ urlpatterns = [
 
     #add new staff
     path('add_staff/', views.add_staff, name='add_staff'),
+    path('remove_staff_members/', views.remove_staff_members, name='remove_staff_members'),
     
     #create new User
     #path('signup/', views.signup, name='signup'),
