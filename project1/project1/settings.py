@@ -30,8 +30,6 @@ INSTALLED_APPS = [
     'projectapp.apps.ProjectappConfig',
     'bootstrap5',
     'captcha',
-    'django_otp',
-    'django_otp.plugins.otp_totp',
     'django_session_timeout'
 ]
 
@@ -135,6 +133,8 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 MEDIA_URL = '/media/'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+AUTH_USER_MODEL = 'projectapp.CustomUser'
 
 RECAPTCHA_PUBLIC_KEY = '6LdoRE0oAAAAAK0XwRm4zKRREvHyzDweAsK0qXPO'
 RECAPTCHA_PRIVATE_KEY = '6LdoRE0oAAAAAIsVJX2byJJpSMQaGii9zGmotyNV'
