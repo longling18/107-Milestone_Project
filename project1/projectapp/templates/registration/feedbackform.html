@@ -1,113 +1,737 @@
 {% load static %} {% load bootstrap5 %} {% bootstrap_css %}
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
-    <title>Feedback Form</title>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!----======== CSS ======== -->
+    <link rel="stylesheet" href="{% static 'form.css' %}" />
+    <title>UniVoice Feedback</title>
+    <!----===== Boxicons CSS ===== -->
     <link
+      href="https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css"
       rel="stylesheet"
-      type="text/css"
-      href="{% static 'assets/css/form.css' %}"
     />
+
+    <!--<title>Dashboard Sidebar Menu</title>-->
   </head>
   <body>
-    <div class="feedback-form">
-      <div class="container">
-        <div class="close-icon" onclick="closeForm()">X</div>
-        <form id="feedbackForm" style="margin: 0 auto">
-          <h3>Feedback Form</h3>
+    <nav class="sidebar close">
+      <header>
+        <div class="image-text">
+          <span class="image">
+            <img src="{% static 'images/logoUniv.png' %}" alt="wewew" />
+          </span>
 
-          <input type="text" name="name" placeholder="Name (optional)" />
-
-          <div class="choices">
-            <label>Anonymous:</label>
-            <input
-              type="radio"
-              id="anonymous"
-              name="visibility"
-              value="anonymous"
-              checked
-            />
-            <label for="anonymous">Yes</label>
-
-            <input
-              type="radio"
-              id="notAnonymous"
-              name="visibility"
-              value="notAnonymous"
-            />
-            <label for="notAnonymous">No</label>
+          <div class="text logo-text">
+            <span class="name">CSU Buildings</span>
+            <span class="profession">& Facilities</span>
           </div>
+        </div>
+      </header>
 
-          <div class="feedback">
-            <label for="feedback">Feedback:</label>
-            <textarea
-              id="feedback"
-              name="feedback"
-              rows="3"
-              required
-            ></textarea>
-          </div>
+      <li id="home-icon">
+        <a href="{% url 'index' %}">
+          <i class="bx bx-home icon"> Home</i>
+          <!-- Replace "bx-home" with the class of your home icon -->
+        </a>
+      </li>
+      <div class="menu-bar">
+        <div class="menu">
+          <ul class="menu-links">
+            <li class="nav-link">
+              <a href="#">
+                <i class="bx bx-home-alt icon"></i>
+                <span class="text nav-text">CAA Building</span>
+              </a>
+              <ul class="submenu">
+                <li>
+                  <a
+                    href="#"
+                    onclick="showFeedbackForm( 'CSU CAA Building - Comfort Room Feedback Form')"
+                    >Comfort Rooms</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="#"
+                    onclick="showFeedbackForm('CSU CAA Building - Lecture Room Feedback Form')"
+                    >Lecture Rooms</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="#"
+                    onclick="showFeedbackForm('CSU CAA Building - Canteen Feedback Form')"
+                    >Canteen</a
+                  >
+                </li>
+              </ul>
+            </li>
 
-          <input type="submit" value="Submit" />
-        </form>
-      </div>
+            <li class="nav-link">
+              <a href="#">
+                <i class="bx bx-home-alt icon"></i>
+                <span class="text nav-text">Hiraya</span>
+              </a>
+              <ul class="submenu">
+                <li>
+                  <a
+                    href="#"
+                    onclick="showFeedbackForm('CSU Hiraya Building - Comfort Room Feedback Form')"
+                    >Comfort Rooms</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="#"
+                    onclick="showFeedbackForm('CSU Hiraya Building - Lecture Room Feedback Form')"
+                    >Lecture Rooms</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="#"
+                    onclick="showFeedbackForm('CSU Hiraya Building - Laboratory Room Feedback Form')"
+                    >Laboratory Rooms</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="#"
+                    onclick="showFeedbackForm('CSU Hiraya Building - Auditorium Feedback Form')"
+                    >Auditorium</a
+                  >
+                </li>
+              </ul>
+            </li>
+            <li class="nav-link">
+              <a href="#">
+                <i class="bx bx-home-alt icon"></i>
+                <span class="text nav-text">Villares</span>
+              </a>
+              <ul class="submenu">
+                <li>
+                  <a
+                    href="#"
+                    onclick="showFeedbackForm('CSU Villares Building - Comfort Room Feedback Form')"
+                    >Comfort Rooms</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="#"
+                    onclick="showFeedbackForm('CSU Villares Building - Lecture Room Feedback Form')"
+                    >Lecture Rooms</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="#"
+                    onclick="showFeedbackForm('CSU Villares Building - Laboratory Room Feedback Form')"
+                    >Laboratory Rooms</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="#"
+                    onclick="showFeedbackForm('CSU Villares Building - Canteen Feedback Form')"
+                    >Canteen</a
+                  >
+                </li>
+              </ul>
+            </li>
+            <li class="nav-link">
+              <a href="#">
+                <i class="bx bx-home-alt icon"></i>
+                <span class="text nav-text">Hinang</span>
+              </a>
+              <ul class="submenu">
+                <li>
+                  <a
+                    href="#"
+                    onclick="showFeedbackForm('CSU Hinang Building - Comfort Room Feedback Form')"
+                    >Comfort Rooms</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="#"
+                    onclick="showFeedbackForm('CSU Hinang Building - Lecture Room Feedback Form')"
+                    >Lecture Rooms</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="#"
+                    onclick="showFeedbackForm('CSU Hinang Building - Laboratory Room Feedback Form')"
+                    >Laboratory Rooms</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="#"
+                    onclick="showFeedbackForm('CSU Hinang Building - Auditorium Feedback Form')"
+                    >Auditorium</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="#"
+                    onclick="showFeedbackForm('CSU Hinang Building - Canteen Feedback Form')"
+                    >Canteen</a
+                  >
+                </li>
+              </ul>
+            </li>
 
-      <!-- Modal is centered with this class -->
-      <div class="modal" id="myModal">
-        <div class="modal-content">
-          <span class="close" onclick="closeModal()">&times;</span>
-          <p id="modalMessage"></p>
-          <button class="submit-button" onclick="resetForm()">Submit Another</button>
-          <button class="close-button" onclick="closeM()">Close</button>
+            <li class="nav-link">
+              <a href="#">
+                <i class="bx bx-home-alt icon"></i>
+                <span class="text nav-text">Kinaadman</span>
+              </a>
+              <ul class="submenu">
+                <li>
+                  <a
+                    href="#"
+                    onclick="showFeedbackForm('CSU Kinaadman - Comfort Room Feedback Form')"
+                    >Comfort Rooms</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="#"
+                    onclick="showFeedbackForm('CSU Kinaadman - Lecture Room Feedback Form')"
+                    >Lecture Rooms</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="#"
+                    onclick="showFeedbackForm('CSU Kinaadman - Canteen Feedback Form')"
+                    >Canteen</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="#"
+                    onclick="showFeedbackForm('CSU Kinaadman - Auditorium Feedback Form')"
+                    >Auditorium</a
+                  >
+                </li>
+              </ul>
+            </li>
+
+            <li class="nav-link">
+              <a href="#">
+                <i class="bx bx-home-alt icon"></i>
+                <span class="text nav-text">Batok Hall</span>
+              </a>
+              <ul class="submenu">
+                <li>
+                  <a
+                    href="#"
+                    onclick="showFeedbackForm('CSU Batok Hall- Comfort Room Feedback Form')"
+                    >Comfort Rooms</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="#"
+                    onclick="showFeedbackForm('CSU Batok Hall - Lecture Room Feedback Form')"
+                    >Lecture Rooms</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="#"
+                    onclick="showFeedbackForm('CSU Batok Hall - Laboratory Room Feedback Form')"
+                    >Laboratory Rooms</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="#"
+                    onclick="showFeedbackForm('CSU Batok Hall - Canteen Feedback Form')"
+                    >Canteen</a
+                  >
+                </li>
+              </ul>
+            </li>
+
+            <li class="nav-link">
+              <a href="#">
+                <i class="bx bx-home-alt icon"></i>
+                <span class="text nav-text">Iwag Hall</span>
+              </a>
+              <ul class="submenu">
+                <li>
+                  <a
+                    href="#"
+                    onclick="showFeedbackForm('CSU Iwag Hall - Comfort Room Feedback Form')"
+                    >Comfort Rooms</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="#"
+                    onclick="showFeedbackForm('CSU Iwag Hall- Lecture Room Feedback Form')"
+                    >Lecture Rooms</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="#"
+                    onclick="showFeedbackForm('CSU Iwag Hall - Canteen Feedback Form')"
+                    >Canteen</a
+                  >
+                </li>
+              </ul>
+            </li>
+            <li class="nav-link">
+              <a href="#">
+                <i class="bx bx-home-alt icon"></i>
+                <span class="text nav-text">Masawa</span>
+              </a>
+              <ul class="submenu">
+                <li>
+                  <a
+                    href="#"
+                    onclick="showFeedbackForm('CSU Masawa - Comfort Room Feedback Form')"
+                    >Comfort Rooms</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="#"
+                    onclick="showFeedbackForm('CSU Masawa - Lecture Room Feedback Form')"
+                    >Lecture Rooms</a
+                  >
+                </li>
+              </ul>
+            </li>
+            <li class="nav-link">
+              <a href="#">
+                <i class="bx bx-home-alt icon"></i>
+                <span class="text nav-text">HERO Common Learning</span>
+              </a>
+              <ul class="submenu">
+                <li>
+                  <a href="#" id="open-feedback-form" onclick="openForm()"
+                    >Comfort Rooms</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="#"
+                    onclick="showFeedbackForm('CSU Library- Discussion Room Feedback Form')"
+                    >Discussion Rooms</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="#"
+                    onclick="showFeedbackForm('CSU Library - Study Area Feedback Form')"
+                    >Study Areas</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="#"
+                    onclick="showFeedbackForm('CSU Library - Canteen Feedback Form')"
+                    >Canteen</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="#"
+                    onclick="showFeedbackForm('CSU Library - ICT Feedback Form')"
+                    >ICT</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="#"
+                    onclick="showFeedbackForm('CSU Library - Auditorium Feedback Form')"
+                    >Auditorium</a
+                  >
+                </li>
+              </ul>
+            </li>
+            <li class="nav-link">
+              <a href="#">
+                <i class="bx bx-home-alt icon"></i>
+                <span class="text nav-text">Old CAS Building</span>
+              </a>
+              <ul class="submenu">
+                <li>
+                  <a
+                    href="#"
+                    onclick="showFeedbackForm('CSU Old CAS Building - Comfort Room Feedback Form')"
+                    >Comfort Rooms</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="#"
+                    onclick="showFeedbackForm('CSU Old CAS Building - Lecture Room Feedback Form')"
+                    >Lecture Rooms</a
+                  >
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+
+        <div class="bottom-content">
+          <li class="mode">
+            <div class="sun-moon">
+              <i class="bx bx-moon icon moon"></i>
+              <i class="bx bx-sun icon sun"></i>
+            </div>
+            <span class="mode-text text">Dark mode</span>
+            <div class="toggle-switch">
+              <span class="switch"></span>
+            </div>
+          </li>
         </div>
       </div>
-      
+    </nav>
 
+    <section class="home">
+      <div class="text welcome-text animated">Time to UniVOICE it out!!</div>
+      <div class="container">
+        <form id="feedback-form" action="#" method="post" class="feedback-form">
+          <div class="close-box">
+            <button class="close-button" onclick="closeForm()">x</button>
+          </div>
+          <h2>Feedback Form</h2>
+          <hr />
+          <label for="name">Name:</label>
+          <input type="text" id="name" name="name" required />
+
+          <label for="age">Age:</label>
+          <input type="number" id="age" name="age" required />
+
+          <label for="college">College:</label>
+          <select id="college" name="college" required class="input-dropdown">
+            <option value="CCIS">CCIS</option>
+            <option value="CEGS">CEGS</option>
+            <option value="CMNS">CMNS</option>
+            <option value="CHASS">CHASS</option>
+            <option value="CED">CED</option>
+            <option value="CAA">CAA</option>
+            <option value="CoFES">CoFES</option>
+            <option value="Guest">Outside CSU Campus (Guest)</option>
+          </select>
+
+          <label for="number">Contact Number:</label>
+          <input type="text" id="number" name="number" required />
+
+          <label for="feedback">Feedback Comment:</label>
+          <textarea id="feedback" name="feedback" rows="4" required></textarea>
+
+          <label class="file-label" for="file-upload"
+            >Upload File or Image</label
+          >
+          <div class="file-upload-container">
+            <input
+              type="file"
+              id="file-upload"
+              name="file"
+              accept=".jpg, .jpeg, .png, .pdf"
+            />
+            <span class="file-name">(No file selected)</span>
+            <button id="cancel-file" type="button" style="display: none">
+              x
+            </button>
+          </div>
+          <input type="submit" value="Submit" id="submit-feedback" />
+        </form>
+        <div class="modal" id="confirmationModal">
+          <div class="modal-content">
+            <h2>Feedback Submission</h2>
+            <p>Do you want to submit your feedback anonymously?</p>
+            <div class="modal-buttons">
+              <button onclick="submitFeedback(true)">Yes</button>
+              <button onclick="submitFeedback(false)">No</button>
+            </div>
+          </div>
+        </div>
+
+        <form id="thank-you-form" class="thank-you-form">
+          <h2>Your information is anonymous!</h2>
+          <p>
+            Thank you for being an important part of our community. Your
+            feedback matters to us, and we are committed to using it to make
+            positive changes. Your voice makes a difference!
+          </p>
+          <button id="review-feedback-button">Review Feedback</button>
+          <button id="review-done-button">Done</button>
+        </form>
+        <form id="no-thank-you-form" class="thank-you-form">
+          <h2>Your feedback has been submitted unanonymously!</h2>
+          <p>
+            Thank you for being an important part of our community. Your
+            feedback matters to us, and we are committed to using it to make
+            positive changes. Your voice makes a difference!
+          </p>
+          <button id="no-review-feedback-button">Review Feedback</button>
+          <button id="review-done-button">Done</button>
+        </form>
+
+        <section id="review-section" style="display: none">
+          <h2>Review Feedback</h2>
+          <p id="review-name"></p>
+          <p id="review-age"></p>
+          <p id="review-college"></p>
+          <p id="review-number"></p>
+          <p id="review-feedback-comment"></p>
+          <p id="review-file"></p>
+
+          <button id="done-button">Done</button>
+        </section>
+      </div>
+    </section>
+    <!-- Add this script at the end of your existing script -->
     <script>
-      function closeForm() {
-        document.querySelector(".feedback-form").style.display = "none";
-      }
-      function closeForm() {
-        window.location.href = "{% url 'index' %}";
-      }
-      function closeModal() {
-        document.getElementById("myModal").style.display = "none";
+      document
+        .getElementById("submit-feedback")
+        .addEventListener("click", function (e) {
+          e.preventDefault();
+
+          const feedbackForm = document.getElementById("feedback-form");
+          if (feedbackForm.checkValidity()) {
+            // Open the modal if the form is valid
+            document.getElementById("confirmationModal").style.display = "flex";
+          } else {
+            alert("Please fill in all required fields before submitting.");
+          }
+        });
+
+      function submitFeedback(isAnonymous) {
+        // You can handle the submission logic here
+        // 'isAnonymous' will be either true or false based on the user's choice
+
+        // For now, let's just close the modal
+        document.getElementById("confirmationModal").style.display = "none";
       }
 
-      function closeM() {
-        document.querySelector(".feedback-form").style.display = "none";
-      }
-      function closeM() {
-        // Change the window's location to the URL defined in your Django app's urls.py
-        window.location.href = "{% url 'index' %}";
-      }
+      // Existing code...
 
-      function resetForm() {
-        document.getElementById("feedbackForm").reset();
-        closeModal();
+      function submitFeedback(isAnonymous) {
+        document.getElementById("confirmationModal").style.display = "none";
+
+        if (isAnonymous) {
+          // If user clicked 'Yes'
+          document.getElementById("thank-you-form").style.display = "block";
+        } else {
+          // If user clicked 'No'
+          document.getElementById("no-thank-you-form").style.display = "block";
+        }
       }
 
       document
-        .getElementById("feedbackForm")
-        .addEventListener("submit", function (event) {
-          event.preventDefault();
+        .getElementById("review-feedback-button")
+        .addEventListener("click", function (e) {
+          e.preventDefault();
 
-          const name = document.querySelector('input[name="name"]').value;
-          const visibility = document.querySelector(
-            'input[name="visibility"]:checked'
-          ).value;
-          const feedback = document.getElementById("feedback").value;
+          // Retrieve user's responses
+          var feedbackComment = document.getElementById("feedback").value;
+          var name = document.getElementById("name").value;
+          var age = document.getElementById("age").value;
+          var college = document.getElementById("college").value;
+          var number = document.getElementById("number").value;
+          //var feedbackComment = document.getElementById('feedback').value;
+          var fileName = document.querySelector(".file-name").textContent;
 
-          let message = "Thank you for your feedback. ";
-          if (visibility === "anonymous") {
-            message += "Your feedback is anonymous.";
-          } else {
-            message += `Your name is ${name}.`;
-          }
+          // Set all values to "Anonymous"
 
-          document.getElementById("modalMessage").textContent = message;
-          document.getElementById("myModal").style.display = "block";
+          name = "Anonymous";
+          age = "Anonymous";
+          college = "Anonymous";
+          number = "Anonymous";
+
+          // Update the content in the review section
+          document.getElementById("review-feedback-comment").innerText =
+            "Feedback Comment: " + feedbackComment;
+          document.getElementById("review-name").innerText =
+            "Name: " + (name ? name : "Anonymous");
+          document.getElementById("review-age").innerText =
+            "Age: " + (age ? age : "Not specified");
+          document.getElementById("review-college").innerText =
+            "College: " + college;
+          document.getElementById("review-number").innerText =
+            "Contact Number: " + number;
+          //document.getElementById('review-feedback-comment').innerText = "Feedback Comment: " + feedbackComment;
+          document.getElementById("review-file").innerText =
+            "File/Image: " + (fileName ? fileName : "No file selected");
+
+          document
+            .getElementById("done-button")
+            .addEventListener("click", function () {
+              // Hide the review section
+              document.getElementById("review-section").style.display = "none";
+            });
+          // Show the review section
+          document.getElementById("feedback-form").style.display = "none";
+          document.getElementById("review-section").style.display = "block";
+          document.getElementById("thank-you-form").style.display = "none";
         });
+
+      document
+        .getElementById("no-review-feedback-button")
+        .addEventListener("click", function (e) {
+          e.preventDefault();
+
+          // Retrieve user's responses
+          var feedbackComment = document.getElementById("feedback").value;
+          var name = document.getElementById("name").value;
+          var age = document.getElementById("age").value;
+          var college = document.getElementById("college").value;
+          var number = document.getElementById("number").value;
+          var fileName = document.querySelector(".file-name").textContent;
+
+          // Update the content in the review section
+          document.getElementById("review-feedback-comment").innerText =
+            "Feedback Comment: " + feedbackComment;
+          document.getElementById("review-name").innerText =
+            "Name: " + (name ? name : "Anonymous");
+          document.getElementById("review-age").innerText =
+            "Age: " + (age ? age : "Not specified");
+          document.getElementById("review-college").innerText =
+            "College: " + college;
+          document.getElementById("review-number").innerText =
+            "Contact Number: " + number;
+          document.getElementById("review-file").innerText =
+            "File/Image: " + (fileName ? fileName : "No file selected");
+
+          // Show the review section and hide other forms
+          document.getElementById("feedback-form").style.display = "none";
+          document.getElementById("thank-you-form").style.display = "none";
+          document.getElementById("no-thank-you-form").style.display = "none";
+
+          // Show the review section
+          document.getElementById("review-section").style.display = "block";
+        });
+      document
+        .getElementById("done-button")
+        .addEventListener("click", function () {
+          // Hide the review section
+          document.getElementById("review-section").style.display = "none";
+
+          // Show the initial feedback form
+          document.getElementById("feedback-form").style.display = "none";
+        });
+    </script>
+
+    <script>
+      const fileInput = document.getElementById("file-upload");
+      const cancelFileButton = document.getElementById("cancel-file");
+      const fileName = document.querySelector(".file-name");
+
+      fileInput.addEventListener("change", function () {
+        if (fileInput.files.length > 0) {
+          fileName.textContent = fileInput.files[0].name;
+          cancelFileButton.style.display = "inline";
+        } else {
+          fileName.textContent = "(No file selected)";
+          cancelFileButton.style.display = "none";
+        }
+      });
+
+      cancelFileButton.addEventListener("click", function () {
+        fileInput.value = ""; // Clear the selected file
+        fileName.textContent = "(No file selected)";
+        cancelFileButton.style.display = "none";
+      });
+    </script>
+
+    <script>
+      const body = document.querySelector("body");
+      const sidebar = body.querySelector("nav");
+      //const toggle = sidebar.querySelector('.toggle');
+      const searchBtn = sidebar.querySelector(".search-box");
+      const modeSwitch = sidebar.querySelector(".toggle-switch");
+      const modeText = sidebar.querySelector(".mode-text");
+      const navLinks = sidebar.querySelectorAll(".nav-link");
+      const submenus = document.querySelectorAll(".submenu");
+
+      navLinks.forEach((navLink) => {
+        const submenu = navLink.querySelector(".submenu");
+
+        navLink.addEventListener("click", (e) => {
+          e.preventDefault();
+
+          if (submenu) {
+            // Toggle the submenu when the menu item is clicked
+            submenu.style.display =
+              submenu.style.display === "block" ? "none" : "block";
+
+            // Close other submenus
+            submenus.forEach((otherSubmenu) => {
+              if (otherSubmenu !== submenu) {
+                otherSubmenu.style.display = "none";
+              }
+            });
+          }
+        });
+
+        // Prevent the submenu from displaying on hover
+        navLink.addEventListener("mouseenter", () => {
+          submenus.forEach((otherSubmenu) => {
+            if (otherSubmenu !== submenu) {
+              otherSubmenu.style.display = "none";
+            }
+          });
+        });
+      });
+      /* toggle.addEventListener('click', () => {
+            sidebar.classList.toggle('close');
+            submenus.forEach((submenu) => {
+                submenu.style.display = 'none'; // Close all submenus when toggling the sidebar
+            });
+        });*/
+      searchBtn.addEventListener("click", () => {
+        sidebar.classList.remove("close");
+      });
+      modeSwitch.addEventListener("click", () => {
+        body.classList.toggle("dark");
+        if (body.classList.contains("dark")) {
+          modeText.innerText = "Light mode";
+        } else {
+          modeText.innerText = "Dark mode";
+        }
+      });
+      // Close submenus when clicking anywhere outside of the submenu
+      document.addEventListener("click", (e) => {
+        if (!sidebar.contains(e.target)) {
+          submenus.forEach((submenu) => {
+            submenu.style.display = "none"; // Hide the submenu when clicking outside
+          });
+        }
+      });
+    </script>
+    <script>
+      function showFeedbackForm(title) {
+        const feedbackForm = document.querySelector(".feedback-form");
+        const formTitle = document.querySelector("h2");
+        const closeBox = document.querySelector(".close-box");
+        formTitle.innerText = title;
+        feedbackForm.style.display = "block";
+        closeBox.style.display = "block";
+
+        document.getElementById("confirmationModal").style.display = "none";
+        document.getElementById("thank-you-form").style.display = "none";
+        document.getElementById("no-thank-you-form").style.display = "none";
+        document.getElementById("review-section").style.display = "none";
+      }
+      function closeForm() {
+        const feedbackForm = document.querySelector(".feedback-form");
+        feedbackForm.style.display = "none";
+      }
     </script>
   </body>
 </html>

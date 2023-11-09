@@ -1,0 +1,67 @@
+{% load static %} {% load bootstrap5 %} {% bootstrap_css %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>About</title>
+
+    <!-- Favicons -->
+    <link href="{% static 'assets/img/favicon.png' %}" rel="icon" />
+    <link href="{% static 'assets/img/favicon.png' %}" rel="apple-touch-icon" />
+
+    <!---Custom CSS File--->
+    <link rel="stylesheet" href="{% static 'about.css' %}" />
+  </head>
+  <body>
+    <header id="header" class="header fixed-top d-flex align-items-center">
+      <div class="container d-flex align-items-center justify-content-between">
+        <div id="logo">
+          <h1>
+            <a href="{% url 'index' %}"><span>Uni</span>Voice</a>
+          </h1>
+        </div>
+      </div>
+    </header>
+    <!-- End Header -->
+
+    <!-- Content -->
+    <div class="about">
+      <div class="container align-items-center">
+        <h1 class="title">About Us</h1>
+        <p class="p">
+                   At Caraga State University-Main Campus, we are committed to
+          providing a world-class educational experience for our students,
+          faculty, and staff. We understand that the quality of campus
+          facilities and services plays a pivotal role in shaping this
+          experience. To uphold our commitment to excellence, we have introduced
+          the <span>UniVoice: CSU Student Feedback Portal</span>, an internally
+          developed initiative that places the voice of our campus community at
+          the heart of our decision-making process.
+        </p>
+
+        <h1 class="title">Our Mission</h1>
+        <p class="p">
+                  To continually enhance the quality of services and facilities
+          within our institution. We believe that the best way to achieve this
+          goal is by actively seeking feedback from those who matter most – you,
+          the members of our campus community.
+        </p>
+        <hr class="line" />
+
+        <p class="p">
+          <br />We invite you to be an active participant in this journey of
+          improvement. Your feedback is not just a suggestion – it's a powerful
+          tool for making a difference in the quality of your educational
+          experience. Together, we can create a campus environment that not only
+          meets but exceeds your expectations.
+
+          <br /><br />Thank you for being a part of our commitment to excellence
+          in campus facilities and services. Your voice matters, and your input
+          is the catalyst for positive change.
+        </p>
+      </div>
+    </div>
+  </body>
+</html>

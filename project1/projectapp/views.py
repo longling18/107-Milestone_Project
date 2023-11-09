@@ -11,6 +11,8 @@ from projectapp.models import CustomUser
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.http import JsonResponse
 from .models import CustomUser
+from django.shortcuts import render, redirect
+from django.contrib.auth.forms import PasswordResetForm
 
 import logging
 
@@ -18,6 +20,9 @@ logger = logging.getLogger(__name__)
 # Create your views here
 def Index(request):
     return render(request, 'registration/index.html', {'section': 'index'})
+
+def About(request):
+    return render(request, 'registration/about.html', {'section': 'about'})
 
 def feedback_form(request):
     return render(request, 'registration/feedbackform.html', {'section': 'feedbackform'})
@@ -141,7 +146,7 @@ class CustomPasswordResetView(PasswordResetView):
     template_name = 'password_reset_form.html'
 
 class CustomPasswordResetDoneView(PasswordResetDoneView):
-    template_name = 'password_reset_confirm.html'
+    template_name = 'password_reset_done.html'
 
 def add_staff(request):
     if request.method == 'POST':
