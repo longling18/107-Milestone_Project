@@ -1,5 +1,5 @@
 from django import forms
-from django.contrib.auth.models import User
+from projectapp.models import CustomUser 
 from captcha.fields import ReCaptchaField
 from captcha.widgets import ReCaptchaV2Checkbox
 from django.contrib.auth.forms import AuthenticationForm
@@ -38,5 +38,5 @@ class Signup(forms.ModelForm):
 '''
 class StaffAddForm(forms.ModelForm):
     class Meta:
-        model = User
-        fields = ['first_name', 'last_name', 'email', 'username', 'password']
+        model = CustomUser
+        fields = ['first_name', 'last_name', 'email', 'username', 'password', 'profile_image'] 

@@ -7,10 +7,14 @@ from django.contrib.auth.views import LoginView, PasswordChangeView, PasswordRes
 from django.urls import reverse_lazy
 from django.urls import reverse
 from .forms import CustomLoginForm, StaffAddForm
-from django.contrib.auth.models import User
+from projectapp.models import CustomUser 
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.http import JsonResponse
+from .models import CustomUser
 
+import logging
+
+logger = logging.getLogger(__name__)
 # Create your views here
 def Index(request):
     return render(request, 'registration/index.html', {'section': 'index'})
@@ -23,7 +27,7 @@ def is_superuser(user):
 @login_required
 @user_passes_test(is_superuser)
 def admin_dashboard(request):
-    users = User.objects.filter(is_staff=False)
+    users = CustomUser.objects.filter(is_staff=False)
     if request.method == 'POST':
         form = StaffAddForm(request.POST)
         if form.is_valid():
@@ -141,13 +145,15 @@ class CustomPasswordResetDoneView(PasswordResetDoneView):
 
 def add_staff(request):
     if request.method == 'POST':
-        form = StaffAddForm(request.POST)
+        form = StaffAddForm(request.POST, request.FILES)
         if form.is_valid():
             user = form.save(commit=False)
             user.set_password(form.cleaned_data['password'])
-            user.is_staff = True  # Set the user as staff
+            user.is_staff = False  # Set the user as staff
+            if 'profile_image' in request.FILES:  # Check if a file is uploaded
+                user.profile_image = request.FILES['profile_image']
             user.save()
-            return redirect('admin_dashboard')  # Redirect to the admin dashboard
+            return redirect('admin_dashboard')
     else:
         form = StaffAddForm()
 
@@ -163,7 +169,7 @@ def remove_staff_members(request):
             user_ids = [int(user_id) for user_id in user_ids]
             
             # Use the User model to delete users with the given IDs
-            User.objects.filter(id__in=user_ids).delete()
+            CustomUser.objects.filter(id__in=user_ids).delete()
             
             return JsonResponse({"message": "Staff members removed successfully"})
         except ValueError:

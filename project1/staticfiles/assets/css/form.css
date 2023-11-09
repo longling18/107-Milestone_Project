@@ -1,109 +1,162 @@
 /* form.css */
+
+/* Common styles for all screen sizes */
 body {
-    font-family: 'Poppins', sans-serif;
-    background-color: #f2f2f2;
+  font-family: "Poppins", sans-serif;
+  background-color: #f2f2f2;
 }
 
 .close-icon {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    cursor: pointer;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
 }
-
 
 .feedback-form {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%,-50%);
-    max-width: 900px;
-    width: 90%;
-
-    align-items: center;
-    background-color: #fff;
-    margin: 0 auto;
-    padding: 20px;
-    border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    display:fixed;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  max-width: 900px;
+  width: 90%;
+  align-items: center;
+  background-color: #fff;
+  margin: 0 auto;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-.feedback-form input{
-    display: fixed;
+.feedback-form input {
+  display: fixed;
 }
 
 h3 {
-    text-align: center;
+  margin-top: 5%;
+  text-align: center;
 }
 
 form label {
-    display: block;
-    margin-top: 10px;
+  display: block;
+  margin-top: 10px;
 }
 
 input[type="text"],
 textarea {
-    width: 100%;
-    padding: 10px;
-    margin: 5px 0;
-    border: 1px solid #ccc;
-    border-radius: 3px;
+  width: 100%;
+  padding: 10px;
+  margin: 5px 0;
+  border: 1px solid #ccc;
+  border-radius: 3px;
 }
-.container{
-    margin-right: 15px;
+
+.container {
+  margin-right: 15px;
 }
+
 .choices label {
-    display: inline; /* Display labels inline */
-    margin-right: 10px; /* Add some spacing between labels and radio buttons */
+  display: inline;
+  margin-right: 10px;
 }
 
 .choices input[type="radio"] {
-    margin-right: 5px; /* Add some spacing between radio buttons */
+  margin-right: 5px;
 }
 
-.feedback label{
-    padding-top: 5%;
-
+.feedback label {
+  padding-top: 5%;
 }
 
 .feedback textarea {
-    width: 100%;
-    padding: 10px;
-    margin: 5px 0;
-    border: 1px solid #ccc;
-    border-radius: 3px;
-    vertical-align: top; /* Align text at the top of the textarea */
-    width: 880px; /* Set a fixed width */
-    height: 400px; /* Set a fixed height */
-    resize: vertical;
+  width: 100%;
+  padding: 10px;
+  margin: 5px 0;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  vertical-align: top;
+  width: 100%; /* Adjusted for responsiveness */
+  height: 200px; /* Adjusted for responsiveness */
+  resize: vertical;
 }
 
-
-
-
-
 input[type="submit"] {
-    background-color: #007BFF;
-    color: #fff;
-    border: none;
-    border-radius: 3px;
-    padding: 10px 15px;
-    cursor: pointer;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 3px;
+  padding: 10px 15px;
+  cursor: pointer;
 }
 
 input[type="submit"]:hover {
-    background-color: #0056b3;
+  background-color: #0056b3;
 }
 
+/* Responsive styles for smaller screens */
+@media (max-width: 768px) {
+  .feedback-form {
+    width: 95%; /* Adjusted for smaller screens */
+  }
 
-
-input[type="submit"] {
-    background-color: #007BFF;
-    color: #fff;
-    border: none;
-    border-radius: 3px;
-    padding: 10px 15px;
-    cursor: pointer;
+  feedback-form input,
+  textarea {
+    width: 100%; /* Adjusted for smaller screens */
+  }
 }
 
+/* Modal Styles */
+.modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7);
+}
+
+.modal-content {
+  position: relative;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #fff;
+  border-radius: 5px;
+  padding: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 24px;
+  cursor: pointer;
+  color: #333; /* Change the color to your preference */
+}
+
+.close:hover {
+  color: red; /* Change the hover color to your preference */
+}
+
+/* Submit and Close Buttons */
+.submit-button,
+.close-button {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 15px;
+  cursor: pointer;
+  margin: 10px;
+  transition: background-color 0.3s ease; /* Smooth color transition on hover */
+}
+
+.submit-button:hover,
+.close-button:hover {
+  background-color: #0056b3; /* Change the hover color to your preference */
+}
+
+/* You can add more styles and effects as needed */

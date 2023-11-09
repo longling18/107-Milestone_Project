@@ -103,7 +103,7 @@
               >
                 <img
                   class="img-xs rounded-circle"
-                  src="{% static 'images2/faces/face8.jpg' %}"
+                  src="{{ user.profile_image.url }}"
                   alt="Profile image"
                 />
               </a>
@@ -113,8 +113,8 @@
               >
                 <div class="dropdown-header text-center">
                   <img
-                    class="img-md rounded-circle"
-                    src="{% static 'images2/faces/face8.jpg' %}"
+                    class="img-sm rounded-circle"
+                    src="{{ user.profile_image.url }}"
                     alt="Profile image"
                   />
                   <p class="mb-1 mt-3 font-weight-semibold">{{request.user.first_name}}</p>
@@ -269,30 +269,34 @@
                                                 </button>
                                             </div>
                                             <div class="modal-body">
-                                                <form method="post" id="StaffAddForm">
-                                                    {% csrf_token %}
-                                                    <div class="form-group">
-                                                        {{ form.first_name.label_tag }}
-                                                        {{ form.first_name }}
-                                                    </div>
-                                                    <div class="form-group">
-                                                        {{ form.last_name.label_tag }}
-                                                        {{ form.last_name }}
-                                                    </div>
-                                                    <div class="form-group">
-                                                        {{ form.email.label_tag }}
-                                                        {{ form.email }}
-                                                    </div>
-                                                    <div class="form-group">
-                                                        {{ form.username.label_tag }}
-                                                        {{ form.username }}
-                                                    </div>
-                                                    <div class="form-group">
-                                                        {{ form.password.label_tag }}
-                                                        {{ form.password }}
-                                                    </div>
-                                                    <button type="submit" class="btn btn-primary text-white">Save</button>
-                                                </form>
+                                              <form enctype="multipart/form-data" method="post" action="{% url 'add_staff' %}" id="StaffAddForm" autocomplete="off">
+                                                {% csrf_token %}
+                                                <div class="form-group">
+                                                    {{ form.first_name.label_tag }}
+                                                    {{ form.first_name }}
+                                                </div>
+                                                <div class="form-group">
+                                                    {{ form.last_name.label_tag }}
+                                                    {{ form.last_name }}
+                                                </div>
+                                                <div class="form-group">
+                                                    {{ form.email.label_tag }}
+                                                    {{ form.email }}
+                                                </div>
+                                                <div class="form-group">
+                                                    {{ form.username.label_tag }}
+                                                    {{ form.username }}
+                                                </div>
+                                                <div class="form-group">
+                                                    {{ form.password.label_tag }}
+                                                    {{ form.password }}
+                                                </div>
+                                                <div>
+                                                    <label for="id_profile_image">Profile image:</label>
+                                                    <input type="file" name="profile_image" accept="image/*" id="id_profile_image" required>
+                                                  </div>                                            
+                                                <button type="submit" class="btn btn-primary text-white">Save</button>
+                                            </form>                                            
                                             </div>
                                         </div>
                                     </div>
@@ -339,7 +343,7 @@
                                             </td>
                                             <td>
                                               <div class="d-flex align-items-center mb-1">
-                                                <img src="{% static 'images2/faces/face1.jpg' %}" alt="User Image" />
+                                                <img src="{{ user.profile_image.url }}" alt="Profile Image" />
                                                 <div>
                                                   <h6>{{ user.first_name }}</h6>
                                                 </div>
