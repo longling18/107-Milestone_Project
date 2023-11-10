@@ -17,7 +17,7 @@ SECRET_KEY = 'django-insecure-xx57j#l-7q$-@w!jhzze8c9b&0(l+w2u4u5g5$bnrc)^i#t3f+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['univoice.netlify.app', 'localhost']
+ALLOWED_HOSTS = ['univoice.netlify.app', '127.0.0.1']
 
 
 # Application definition
