@@ -10,9 +10,11 @@
 # General
 --------------------------------------------------------------*/
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap");
-body {
+body,
+html {
   background-color: #fff;
   color: #333;
+  overflow: hidden;
 }
 
 h1,
@@ -438,7 +440,7 @@ span {
 #hero {
   width: 100%;
   height: calc(100vh - 40px);
-  background: url(../img/hero-bg.png) center bottom no-repeat;
+  background: url(images/b.png) center bottom no-repeat;
   background-size: 100%;
   position: absolute;
   margin-top: 40px;
@@ -469,11 +471,10 @@ span {
   left: 0;
   right: 0;
   display: flex;
-  justify-content: center;
   align-items: center;
   flex-direction: column;
   text-align: center;
-  overflow: hidden;
+  margin-top: 37px;
 }
 
 #hero h1 {

@@ -2,7 +2,7 @@
 from pathlib import Path
 import os
 
-
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -17,7 +17,7 @@ SECRET_KEY = 'django-insecure-xx57j#l-7q$-@w!jhzze8c9b&0(l+w2u4u5g5$bnrc)^i#t3f+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['univoice.netlify.app', 'localhost']
 
 
 # Application definition

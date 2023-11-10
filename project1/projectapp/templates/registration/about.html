@@ -5,7 +5,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>About</title>
+    <title>UniVoice</title>
 
     <!-- Favicons -->
     <link href="{% static 'assets/img/favicon.png' %}" rel="icon" />
@@ -21,6 +21,32 @@
           <h1>
             <a href="{% url 'index' %}"><span>Uni</span>Voice</a>
           </h1>
+          <!-- Uncomment below if you prefer to use an image logo -->
+          <!-- <a href="index.html"><img src="assets/img/logo.png" alt="" title="" /></a>-->
+        </div>
+
+        <nav id="navbar" class="navbar">
+          <div class="center-align text-align-center">
+            <ul>
+              <li>
+                <a class="nav-link scrollto" href="{% url 'index' %}">Home</a>
+              </li>
+              <li>
+                <a class="nav-link scrollto active" href="{% url 'about' %}"
+                  >About</a
+                >
+              </li>
+            </ul>
+          </div>
+
+          <i class="bi bi-list mobile-nav-toggle"></i>
+        </nav>
+
+        <div class="d-flex justify-content-end align-items-center">
+          <!-- Updated container with alignment -->
+          <a href="{% url 'login' %}" id="btn" class="btn-login-button"
+            >Login</a
+          >
         </div>
       </div>
     </header>
