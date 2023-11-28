@@ -53,6 +53,7 @@ def is_not_superuser(user):
 @login_required
 @user_passes_test(is_not_superuser)
 def mydashboard(request):
+    
     print(request.user)
     return render(request, 'registration/dashboard.html', {'section': 'dashboard'})
 
@@ -161,7 +162,6 @@ def add_staff(request):
             return redirect('admin_dashboard')
     else:
         form = StaffAddForm()
-
     return render(request, 'admin_dashboard.html', {'form': form})
 
 def remove_staff_members(request):
@@ -180,3 +180,4 @@ def remove_staff_members(request):
         except ValueError:
             return JsonResponse({"error": "Invalid user IDs provided"}, status=400)
     return JsonResponse({"error": "Invalid request method"}, status=400)
+
