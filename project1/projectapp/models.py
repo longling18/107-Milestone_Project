@@ -9,7 +9,9 @@ class CustomUser(AbstractUser):
 
 class FeedbackProvider(models.Model):
     provider_id = models.AutoField(primary_key=True)
-    name = models.CharField(max_length=255)
+    first_name = models.CharField(max_length=255)
+    last_name = models.CharField(max_length=255)
+    college = models.CharField(max_length=255)
     is_anonymous = models.BooleanField()
 
     def __str__(self):
@@ -21,7 +23,7 @@ class FeedbackProvider(models.Model):
 class Category(models.Model):
     category_id = models.AutoField(primary_key=True)
     category_name = models.TextField()
-    building_id = models.ForeignKey('Building', on_delete=models.CASCADE)
+    building= models.ForeignKey('Building', on_delete=models.CASCADE)
 
     class Meta:
         db_table = 'category'
@@ -29,20 +31,17 @@ class Category(models.Model):
 class Building(models.Model):
     building_id = models.AutoField(primary_key=True)
     building_name = models.TextField()
-    ratings = models.FloatField()
-    description = models.TextField()
 
     class Meta:
         db_table = 'building'
 
 class FeedbackEntry(models.Model):
-    feedback_id = models.AutoField(primary_key=True)
-    provider_id = models.ForeignKey(FeedbackProvider, on_delete=models.CASCADE)
-    building_id = models.ForeignKey(Building, on_delete=models.CASCADE)
-    category_id = models.ForeignKey(Category, on_delete=models.CASCADE)
+    feedback = models.AutoField(primary_key=True)
+    provider = models.ForeignKey(FeedbackProvider, on_delete=models.CASCADE)
+    building = models.ForeignKey(Building, on_delete=models.CASCADE)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE)
     feedback = models.TextField()
     feedback_image = models.ImageField(null=True, blank=True)
-    is_anonymous = models.BooleanField()
     timestamp = models.DateTimeField(auto_now_add=True)
 
     class Meta:

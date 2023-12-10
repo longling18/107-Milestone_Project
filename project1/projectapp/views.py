@@ -6,14 +6,13 @@ from django.contrib.auth.views import LoginView, PasswordChangeView, PasswordRes
 #from django.contrib.auth.forms import UserCreationForm
 from django.urls import reverse_lazy
 from django.urls import reverse
-from .forms import CustomLoginForm, StaffAddForm
+from .forms import CustomLoginForm, StaffAddForm, SubmitForm
 from projectapp.models import CustomUser 
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.http import JsonResponse
-from .models import CustomUser
+from .models import CustomUser, FeedbackProvider, Building, Category
 from django.shortcuts import render, redirect
-from django.contrib.auth.forms import PasswordResetForm
-
+from django.contrib.auth.forms import PasswordResetForm 
 import logging
 
 logger = logging.getLogger(__name__)
@@ -25,8 +24,56 @@ def About(request):
     return render(request, 'registration/about.html', {'section': 'about'})
 
 def feedback_form(request):
-    return render(request, 'registration/feedbackform.html', {'section': 'feedbackform'})
-                  
+    thank_you_flag = False
+
+    if request.method == 'POST':
+        form = SubmitForm(request.POST)
+        if form.is_valid():
+            feedback = form.save(commit=False)
+
+            # Check if the user chose to submit anonymously
+            is_anonymous_str = request.POST.getlist('is_anonymous', ['False'])[0]
+            is_anonymous = is_anonymous_str.lower() == 'true'
+
+            if is_anonymous:
+                feedback.first_name = 'Anonymous'
+                feedback.last_name = 'Anonymous'
+                feedback.is_anonymous = True
+            else:
+                feedback.is_anonymous = False
+
+            feedback.save()
+
+            # Set the thank_you_flag to True
+            thank_you_flag = True
+
+    else:
+        form = SubmitForm()  # Moved outside the if block
+
+    # Fetch the selected building from the form data
+    building_id = request.GET.get('building', None)
+
+    # If building_id is not present or is not a valid integer, set a default
+    building_id = int(building_id) if building_id and building_id.isdigit() else 2
+
+    # Fetch categories for the selected building
+    categories = Category.objects.filter(building_id=building_id)
+
+    buildings = Building.objects.all()
+
+    return render(request, 'registration/feedbackform.html', {'form': form, 'buildings': buildings, 'categories': categories, 'section': 'feedbackform', 'thank_you_flag': thank_you_flag})
+
+def get_categories_by_building(request):
+    building_id = request.GET.get('building_id', None)
+    print(f"Received building_id: {building_id}")
+
+    if building_id:
+        categories = Category.objects.filter(building_id=building_id).values('category_id', 'category_name')
+        print(f"Categories for building {building_id}: {categories}")
+        return JsonResponse({'categories': list(categories)})
+
+    return JsonResponse({'categories': []})
+ 
 def is_superuser(user):
     return user.is_superuser
 @login_required

@@ -719,3 +719,7 @@ label {
 #review-section {
   color: white;
 }
+#thank-you-form,
+#no-thank-you-form {
+  display: none;
+}

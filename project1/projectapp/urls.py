@@ -1,6 +1,7 @@
 from django.urls import path
 from . import views
 from django.contrib.auth import views as auth_views
+from .views import feedback_form, get_categories_by_building
 
 urlpatterns = [
     path('', views.Index, name='index'),
@@ -8,9 +9,11 @@ urlpatterns = [
     path('feedback_form/', views.feedback_form, name='feedback_form'),
     path('dashboard/', views.mydashboard, name='dashboard'),
     path('admin_dashboard/', views.admin_dashboard, name='admin_dashboard'),
+    path('feedback/', feedback_form, name='feedback_form'),
     path('login/', views.CustomLoginView.as_view(), name='login'),
     path('logout/', views.logout_user, name='logout'),
 
+    path('get_categories_by_building/', get_categories_by_building, name='get_categories_by_building'),
     #change password
     path('change_password/', views.CustomPasswordChangeView.as_view(), name='password_change'),
     path('password_change/done/', auth_views.PasswordChangeDoneView.as_view(), name='changepassworddone'),
