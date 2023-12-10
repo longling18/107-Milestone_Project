@@ -20,20 +20,21 @@ class FeedbackProvider(models.Model):
     class Meta:
         db_table = 'feedback_provider'
 
-class Category(models.Model):
-    category_id = models.AutoField(primary_key=True)
-    category_name = models.TextField()
-    building= models.ForeignKey('Building', on_delete=models.CASCADE)
-
-    class Meta:
-        db_table = 'category'
-
 class Building(models.Model):
     building_id = models.AutoField(primary_key=True)
     building_name = models.TextField()
 
     class Meta:
         db_table = 'building'
+
+class Category(models.Model):
+    category_id = models.AutoField(primary_key=True)
+    category_name = models.TextField()
+    building= models.ForeignKey(Building, on_delete=models.CASCADE)
+
+    class Meta:
+        db_table = 'category'
+
 
 class FeedbackEntry(models.Model):
     feedback = models.AutoField(primary_key=True)

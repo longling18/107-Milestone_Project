@@ -3,7 +3,7 @@ from projectapp.models import CustomUser
 from captcha.fields import ReCaptchaField
 from captcha.widgets import ReCaptchaV2Checkbox
 from django.contrib.auth.forms import AuthenticationForm
-from .models import FeedbackProvider
+from .models import FeedbackProvider, FeedbackEntry
 
 class LoginForm(forms.Form):
     username = forms.CharField(widget=forms.TextInput)
@@ -42,11 +42,24 @@ class StaffAddForm(forms.ModelForm):
         model = CustomUser
         fields = ['first_name', 'last_name', 'email', 'username', 'password', 'profile_image']
 
+class FeedbackEntryForm(forms.ModelForm):
+    class Meta:
+        model = FeedbackEntry
+        fields = ['feedback', 'feedback_image', 'category', 'building']
+
 class SubmitForm(forms.ModelForm):
     is_anonymous = forms.BooleanField(
         required=False,
         widget=forms.HiddenInput(),
         initial=False
+    )
+    building_id = forms.IntegerField(
+        widget=forms.HiddenInput(),
+        required=True,
+    )
+    category_id = forms.IntegerField(
+        widget=forms.HiddenInput(),
+        required=True,
     )
 
     class Meta:

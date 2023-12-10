@@ -6,11 +6,11 @@ from django.contrib.auth.views import LoginView, PasswordChangeView, PasswordRes
 #from django.contrib.auth.forms import UserCreationForm
 from django.urls import reverse_lazy
 from django.urls import reverse
-from .forms import CustomLoginForm, StaffAddForm, SubmitForm
+from .forms import CustomLoginForm, StaffAddForm, SubmitForm, FeedbackEntryForm
 from projectapp.models import CustomUser 
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.http import JsonResponse
-from .models import CustomUser, FeedbackProvider, Building, Category
+from .models import CustomUser, FeedbackProvider, Building, Category, FeedbackEntry
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import PasswordResetForm 
 import logging
@@ -25,30 +25,42 @@ def About(request):
 
 def feedback_form(request):
     thank_you_flag = False
-
+    print(request.POST)  # Check if the form data is being received
+    print(request.FILES)
     if request.method == 'POST':
         form = SubmitForm(request.POST)
-        if form.is_valid():
-            feedback = form.save(commit=False)
+        entry_form = FeedbackEntryForm(request.POST, request.FILES)
+
+        if form.is_valid() and entry_form.is_valid():
+            feedback_provider = form.save(commit=False)
 
             # Check if the user chose to submit anonymously
             is_anonymous_str = request.POST.getlist('is_anonymous', ['False'])[0]
             is_anonymous = is_anonymous_str.lower() == 'true'
 
             if is_anonymous:
-                feedback.first_name = 'Anonymous'
-                feedback.last_name = 'Anonymous'
-                feedback.is_anonymous = True
+                feedback_provider.first_name = 'Anonymous'
+                feedback_provider.last_name = 'Anonymous'
+                feedback_provider.is_anonymous = True
             else:
-                feedback.is_anonymous = False
+                feedback_provider.is_anonymous = False
 
-            feedback.save()
+            feedback_provider.save()
+
+            # Now, create a FeedbackEntry using the submitted data
+            feedback_entry = entry_form.save(commit=False)
+            feedback_entry.provider = feedback_provider
+            feedback_entry.building_id = form.cleaned_data['building_id']
+            feedback_entry.category_id = form.cleaned_data['category_id']
+
+            feedback_entry.save()
 
             # Set the thank_you_flag to True
             thank_you_flag = True
 
     else:
         form = SubmitForm()  # Moved outside the if block
+        entry_form = FeedbackEntryForm()
 
     # Fetch the selected building from the form data
     building_id = request.GET.get('building', None)
@@ -61,8 +73,15 @@ def feedback_form(request):
 
     buildings = Building.objects.all()
 
-    return render(request, 'registration/feedbackform.html', {'form': form, 'buildings': buildings, 'categories': categories, 'section': 'feedbackform', 'thank_you_flag': thank_you_flag})
-
+    return render(request, 'registration/feedbackform.html', {
+        'form': form,
+        'entry_form': entry_form,
+        'buildings': buildings,
+        'categories': categories,
+        'selected_building_id': building_id,
+        'selected_category_id': request.GET.get('category', None),
+        'thank_you_flag': thank_you_flag,
+    })
 def get_categories_by_building(request):
     building_id = request.GET.get('building_id', None)
     print(f"Received building_id: {building_id}")
