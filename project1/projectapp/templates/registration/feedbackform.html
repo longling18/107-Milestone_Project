@@ -353,6 +353,7 @@
         // Trigger change event on building selection
         $("#building").on("change", function () {
           var buildingId = $(this).val();
+          console.log("Selected Building ID:", buildingId);
 
           // Clear existing options and show/hide the category dropdown based on selection
           if (buildingId) {
@@ -376,13 +377,26 @@
                 });
               },
             });
+
+            // Update the value of the hidden input field
+            $("#building_id").val(buildingId);
           } else {
             // If no building is selected, hide the category dropdown
             $("#category").hide();
           }
         });
+
         // Trigger change event on page load to populate categories if a building is pre-selected
         $("#building").change();
+
+        // Trigger change event on category selection
+        $("#category").on("change", function () {
+          var categoryId = $(this).val();
+          console.log("Selected Category ID:", categoryId);
+
+          // Update the value of the hidden input field
+          $("#category_id").val(categoryId);
+        });
       });
     </script>
   </body>

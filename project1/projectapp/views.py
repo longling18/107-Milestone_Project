@@ -27,6 +27,13 @@ def feedback_form(request):
     thank_you_flag = False
     print(request.POST)  # Check if the form data is being received
     print(request.FILES)
+
+    # Fetch the selected building from both GET and POST data
+    building_id = request.GET.get('building') or request.GET.get('building_id')
+
+    # If building_id is not present or is not a valid integer, set a default
+    building_id = int(building_id) if building_id and building_id.isdigit() else 2
+
     if request.method == 'POST':
         form = SubmitForm(request.POST)
         entry_form = FeedbackEntryForm(request.POST, request.FILES)
@@ -62,12 +69,6 @@ def feedback_form(request):
         form = SubmitForm()  # Moved outside the if block
         entry_form = FeedbackEntryForm()
 
-    # Fetch the selected building from the form data
-    building_id = request.GET.get('building', None)
-
-    # If building_id is not present or is not a valid integer, set a default
-    building_id = int(building_id) if building_id and building_id.isdigit() else 2
-
     # Fetch categories for the selected building
     categories = Category.objects.filter(building_id=building_id)
 
@@ -82,6 +83,7 @@ def feedback_form(request):
         'selected_category_id': request.GET.get('category', None),
         'thank_you_flag': thank_you_flag,
     })
+
 def get_categories_by_building(request):
     building_id = request.GET.get('building_id', None)
     print(f"Received building_id: {building_id}")
