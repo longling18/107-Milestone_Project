@@ -35,7 +35,6 @@ class Category(models.Model):
     class Meta:
         db_table = 'category'
 
-
 class FeedbackEntry(models.Model):
     feedback = models.AutoField(primary_key=True)
     provider = models.ForeignKey(FeedbackProvider, on_delete=models.CASCADE)

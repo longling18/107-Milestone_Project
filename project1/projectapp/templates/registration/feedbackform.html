@@ -65,6 +65,7 @@
           action="{% url 'feedback_form' %}"
           method="post"
           class="feedback-form"
+          enctype="multipart/form-data"
         >
           {% csrf_token %}
           <div class="close-box">
@@ -145,9 +146,7 @@
               accept=".jpg, .jpeg, .png, .pdf"
             />
             <span class="file-name">(No file selected)</span>
-            <button id="cancel-file" type="button" style="display: none">
-              x
-            </button>
+            <button id="cancel-file" type="button">x</button>
           </div>
           <div class="modal" id="confirmationModal">
             <div class="modal-content">

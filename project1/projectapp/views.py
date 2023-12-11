@@ -60,6 +60,8 @@ def feedback_form(request):
             feedback_entry.building_id = form.cleaned_data['building_id']
             feedback_entry.category_id = form.cleaned_data['category_id']
 
+            feedback_entry.feedback_image = request.FILES.get('feedback_image')
+
             feedback_entry.save()
 
             # Set the thank_you_flag to True
@@ -248,4 +250,3 @@ def remove_staff_members(request):
         except ValueError:
             return JsonResponse({"error": "Invalid user IDs provided"}, status=400)
     return JsonResponse({"error": "Invalid request method"}, status=400)
-
