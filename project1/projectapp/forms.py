@@ -9,9 +9,11 @@ class LoginForm(forms.Form):
     username = forms.CharField(widget=forms.TextInput)
     password = forms.CharField(widget=forms.PasswordInput)
     captcha = ReCaptchaField(widget=ReCaptchaV2Checkbox())
+    otp_token = forms.CharField(label='OTP_Token', required=False)
 
 class CustomLoginForm(AuthenticationForm):
     captcha = ReCaptchaField()
+    otp_token = forms.CharField(label='OTP Token', required=False) 
 
     def clean(self):
         cleaned_data = super().clean()

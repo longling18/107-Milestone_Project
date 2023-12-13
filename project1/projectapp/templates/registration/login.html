@@ -21,11 +21,12 @@
     />
     <script src="https://www.google.com/recaptcha/api.js" async defer></script>
   <body>
+    
     <section id="log">
       <div class="container" data-aos="fade-in">
         <input type="checkbox" id="check" />
         <div class="login form">
-          <header>Log in</header>
+          <header>Login</header>
           {% if messages %}
           <div class="text-center">
             {% for message in messages %}
@@ -42,13 +43,15 @@
             <input type="hidden" name="next" value="{{ next }}" />
 
             <!-- Username Field -->
-            <div class="username">
+            <div class="username" autocomplete="off">
               <label
                 for="{{ form.username.id_for_label }}"
-                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" 
                 >Username:</label
               >
-              {{ form.username }}
+          
+
+              <input type="text" id="{{ form.username.id_for_label }}" name="{{ form.username.name }}" autocomplete="off">
             </div>
 
             <!-- Password Field -->
@@ -66,7 +69,10 @@
                 required
               />
             </div>
-
+            <div class="otp-token">
+              <label for="{{ form.otp_token.id_for_label }}" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">OTP Token:</label>
+              {{ form.otp_token }}
+            </div>          
             <!-- reCAPTCHA -->
             <div
               class="g-recaptcha mb-2"

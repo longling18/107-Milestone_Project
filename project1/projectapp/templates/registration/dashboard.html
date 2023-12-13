@@ -1,311 +1,443 @@
 {% load static %}
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
   <head>
-
     <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	<link
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <title>Staff</title>
+
+    <!-- Favicon -->
+    <link
       rel="icon"
       href="{% static 'images/logoUniv.png' %}"
       type="image/x-icon"
     />
 
-	<title>Staff</title>
+    <!-- Bootstrap CSS -->
+    <link
+      rel="stylesheet"
+      href="{% static 'assets/modules/bootstrap-5.1.3/css/bootstrap.css' %}"
+    />
 
-	<!-- Bootstrap CSS-->
-	<link rel="stylesheet" href="{% static 'assets/modules/bootstrap-5.1.3/css/bootstrap.css' %}">
-	<!-- Style CSS -->
-	<link rel="stylesheet" href="{% static 'staffstyle.css' %}">
-	<!-- FontAwesome CSS-->
-	<link rel="stylesheet" href="{% static 'assets/modules/fontawesome6.1.1/css/all.css' %}">
-	<!-- Boxicons CSS-->
-	<link rel="stylesheet" href="{% static 'assets/modules/boxicons/css/boxicons.min.css' %}">
-	<!-- Apexcharts  CSS -->
-	<link rel="stylesheet" href="{% static 'assets/modules/apexcharts/apexcharts.css' %}">
-</head>
-<body>
-  
-  <!--Topbar -->
-  <div class="topbar transition">
-	<div class="bars">
-		<button type="button" class="btn transition" id="sidebar-toggle">
-			<i class="fa fa-bars"></i>
-		</button>
-	</div>
-		<div class="menu">
-			<ul>
-				
-				  <li class="nav-item dropdown">
-					<a class="nav-link" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-					  <img src="{{ user.profile_image.url }}" alt="Profile image">
-					</a>
-					<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-						<a class="dropdown-item" href="#"><i class="fa fa-user size-icon-1"></i> <span>My Profile</span></a>
-						<a class="dropdown-item" href="#"><i class="fa fa-cog size-icon-1"></i> <span>Settings</span></a>
-						<hr class="dropdown-divider">
-						<a class="dropdown-item" href="{% url 'logout' %}"><i class="fa fa-sign-out-alt  size-icon-1"></i> <span>Sign OUt</span></a>
-					</ul>
-				  </li>
-			</ul>
-		</div>
-	</div>
+    <!-- Custom Style CSS -->
+    <link rel="stylesheet" href="{% static 'staffstyle.css' %}" />
 
-	<!--Sidebar-->
-	<div class="sidebar transition overlay-scrollbars animate__animated  animate__slideInLeft">
-        <div class="sidebar-content"> 
-        	<div id="sidebar">
-			
-			<!-- Logo -->
-			<div class="logo">
-					<h2 class="mb-0"><img src="{% static 'images/logoUniv.png' %}"> UniVoice</h2>
-			</div>
+    <!-- FontAwesome CSS -->
+    <link
+      rel="stylesheet"
+      href="{% static 'assets/modules/fontawesome6.1.1/css/all.css' %}"
+    />
 
-			<li>
-				<a href="{% url 'dashboard' %}" class="active">
-				 <h5 class="hiraya">Hiraya Dashboard</h5>
-				</a>
-			</li>
-<!-- Sidebar -->
-<ul class="side-menu">
+    <!-- Boxicons CSS -->
+    <link
+      rel="stylesheet"
+      href="{% static 'assets/modules/boxicons/css/boxicons.min.css' %}"
+    />
 
-    <li>
-        <a href="#" onclick="toggleFeedback('Comfort Rooms')">
-            <i class='bx bxs-home icon' ></i> 
-            Comfort Rooms
-        </a>
-    </li>
-    <li>
-        <a href="#" onclick="toggleFeedback('Auditorium')">
-            <i class='bx bxs-home icon' ></i> 
-            Auditorium
-        </a>
-    </li>
-    <li>
-        <a href="#" onclick="toggleFeedback('Lecture Rooms')">
-            <i class='bx bxs-home icon' ></i> 
-            Lecture Rooms
-        </a>
-    </li>
-    <li>
-        <a href="#" onclick="toggleFeedback('Laboratory Rooms')">
-            <i class='bx bxs-home icon' ></i> 
-            Laboratory Rooms
-        </a>
-    </li>
+    <!-- Apexcharts CSS -->
+    <link
+      rel="stylesheet"
+      href="{% static 'assets/modules/apexcharts/apexcharts.css' %}"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css"
+    />
+  </head>
 
+  <body>
+    <!-- Topbar -->
+    <div class="topbar transition">
+      <!-- Bars Button -->
+      <div class="bars">
+        <button type="button" class="btn transition" id="sidebar-toggle">
+          <i class="fa fa-bars"></i>
+        </button>
+      </div>
+      <!-- User Menu -->
+      <div class="menu">
+        <ul>
+          <li class="nav-item dropdown">
+            <a
+              class="nav-link"
+              href="#"
+              id="navbarDropdown"
+              role="button"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+            >
+              <img src="{{ user.profile_image.url }}" alt="Profile image" />
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <li>
+                <a class="dropdown-item" href="{% url 'password_change' %}"
+                  ><i class="fa fa-cog size-icon-1"></i>
+                  <span>Change Password</span></a
+                >
+              </li>
+              <hr class="dropdown-divider" />
+              <li>
+                <a class="dropdown-item" href="{% url 'logout' %}"
+                  ><i class="fa fa-sign-out-alt size-icon-1"></i>
+                  <span>Sign Out</span></a
+                >
+              </li>
             </ul>
-
-      
-        </div>
-
-       </div> 
-	 </div>
-	</div><!-- End Sidebar-->
-
-
-	<div class="sidebar-overlay"></div>
-
-
-	<!--Content Start-->
-	<div class="content-start transition">
-		<div class="container-fluid dashboard">
-			<div class="content-header">
-				<h1>Welcome, {{request.user.first_name}}</h1>
-				<p></p>
-			</div>
-			
-			<div class="row">
-
-				<div class="col-md-6 col-lg-3">
-					<div class="card" data-toggle="tooltip" data-placement="top" title="Feedbacks on Comfort Rooms: 10">
-						<div class="card-body">
-							<div class="row">
-								<div class="col-4 d-flex align-items-center">
-									<i class="fas fa-inbox icon-home bg-primary text-light"></i>
-								</div>
-								<div class="col-8">
-									<p>Comfort Rooms</p>
-									
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-
-				<div class="col-md-6 col-lg-3">
-					<div class="card" data-toggle="tooltip" data-placement="top" title="Feedbacks on Comfort Rooms: 10">
-						<div class="card-body">
-							<div class="row">
-								<div class="col-4 d-flex align-items-center">
-									<i class="fas fa-clipboard-list icon-home bg-success text-light"></i>
-								</div>
-								<div class="col-8">
-									<p>Auditorium</p>
-									
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-
-				<div class="col-md-6 col-lg-3">
-					<div class="card" data-toggle="tooltip" data-placement="top" title="Feedbacks on Comfort Rooms: 10">
-						<div class="card-body">
-							<div class="row">
-								<div class="col-4 d-flex align-items-center">
-									<i class="fas fa-chart-bar  icon-home bg-info text-light"></i>
-								</div>
-								<div class="col-8">
-									<p>Laboratory Rooms</p>
-									
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-
-				<div class="col-md-6 col-lg-3">
-					<div class="card" data-toggle="tooltip" data-placement="top" title="Feedbacks on Comfort Rooms: 10">
-						<div class="card-body">
-							<div class="row">
-								<div class="col-4 d-flex align-items-center">
-									<i class="fas fa-id-card  icon-home bg-warning text-light"></i>
-								</div>
-								<div class="col-8">
-									<p>Lecture Rooms</p>
-								
-								</div>
-							</div>
-						</div>
-					</div>
-
-				</div>
-
-
-			
-		
-				
-
-		<!-- Feedback Section -->
-<div class="col-md-12" id="feedback-section" style="display: none;">
-    <div class="card">
-        <div class="card-header">
-            <h4>User's Feedback</h4>
-			<button class="btn btn-danger float-right" onclick="closeFeedback()">Close</button>
-
-        </div>
-        <div class="card-body"> 
-            <div class="table-responsive"> 
-                <table class="table table-striped">
-                    <thead>
-                        <tr>
-                            <th scope="col">Date</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>07 Oct, 2022</td>
-                            <td><button class="btn btn-primary">View Feedback</button></td>
-                        </tr>
-						<tr>
-                            <td>07 Oct, 2022</td>
-                            <td><button class="btn btn-primary">View Feedback</button></td>
-                        </tr>
-						<tr>
-                            <td>07 Oct, 2022</td>
-                            <td><button class="btn btn-primary">View Feedback</button></td>
-                        </tr>
-						<tr>
-                            <td>07 Oct, 2022</td>
-                            <td><button class="btn btn-primary">View Feedback</button></td>
-                        </tr>
-						<tr>
-                            <td>07 Oct, 2022</td>
-                            <td><button class="btn btn-primary">View Feedback</button></td>
-                        </tr>
-						<tr>
-                            <td>07 Oct, 2022</td>
-                            <td><button class="btn btn-primary">View Feedback</button></td>
-                        </tr>
-
-                    </tbody>
-                </table>
-            </div>
-        </div>
+          </li>
+        </ul>
+      </div>
     </div>
-</div>
 
-		   </div>
-		</div>
-	</div>
+    <!-- Sidebar -->
+    <div
+      class="sidebar transition overlay-scrollbars animate__animated animate__slideInLeft"
+    >
+      <div class="sidebar-content">
+        <div id="sidebar">
+          <!-- Logo -->
+          <div class="logo">
+            <h2 class="mb-0">
+              <img src="{% static 'images/logoUniv.png' %}" /> UniVoice
+            </h2>
+          </div>
 
-<!--				
-	<footer>
-		<div class="footer">
-			<div>
-				<p>2023 &copy; UniVoice</p>
-			</div>
-				<div>
-					<p>developed with 
-						<span class="text-danger">
-							<i class="fa fa-heart"></i> by 
-							<a href="#" class="author-footer">Team J</a>
-						</span> 
-					</p>
-			</div>
-		</div>
-	</footer>
--->
+          <!-- Sidebar Items -->
+          <ul class="side-menu">
+            <li>
+              <a href="{% url 'dashboard' %}" class="active">
+                <h5 class="hiraya">Hiraya Dashboard</h5>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
 
-	<!-- Preloader -->
-	<div class="loader">
-		<div class="spinner-border text-light" role="status">
-			<span class="sr-only">Loading...</span>
-		</div>
-	</div>
-	<!-- Loader -->
-	<div class="loader-overlay"></div>
+    <!-- Sidebar Overlay -->
+    <div class="sidebar-overlay"></div>
 
-	<!-- General JS Scripts -->
-	<script src="{% static 'assets/js/atrana.js' %}"></script>
+    <!-- Content Start -->
+    <div class="content-start transition">
+      <div class="container-fluid dashboard">
+        <!-- Content Header -->
+        <div class="content-header">
+          <h1>Welcome, {{ request.user.first_name }}</h1>
+          <p></p>
+        </div>
 
-	<!-- JS Libraies -->
-	<script src="{% static 'assets/modules/jquery/jquery.min.js' %}"></script>
-	<script src="{% static 'assets/modules/bootstrap-5.1.3/js/bootstrap.bundle.min.js' %}"></script>
-	<script src="{% static 'assets/modules/popper/popper.min.js' %}"></script>
+        <!-- Row of Cards -->
+        <div class="row">
+          <!-- Card 1 -->
+          <div class="col-md-6 col-lg-3">
+            <li>
+              <a href="#" onclick="toggleFeedback('Laboratory Rooms', 3 )">
+                <i class="bx bxs-home icon"></i>
+                View Feedback
+              </a>
+            </li>
+          </div>
 
-	<!-- Chart Js -->
-	<script src="{% static 'assets/modules/apexcharts/apexcharts.js' %}"></script>
-	<script src="{% static 'assets/js/ui-apexcharts.js' %}"></script>
+          <!-- Feedback Section -->
+          <div class="col-md-12" id="feedback-section" style="display: none">
+            <div class="card">
+              <div class="card-header">
+                <h4>User's Feedback</h4>
+              </div>
+              <div class="card-body">
+                <div class="table-responsive">
+                  <table class="table table-striped">
+                    <thead></thead>
+                    <tbody id="feedback-table-body" class="custom-background">
+                      {% for entry in feedback_entries %}
+                      <span class="time text-dark d-flex justify-content-end">
+                        <i class="fa fa-clock-o"></i>
+                        {{ entry.timestamp }}
+                      </span>
+                      <div class="border border-5 p-2 mb-5">
+                        <i
+                          class="bi bi-person-fill"
+                          style="font-size: 2rem; color: cornflowerblue"
+                        ></i>
 
-    <!-- Template JS File -->
-	<script src="{% static 'assets/js/script.js' %}"></script>
-	<script src="{% static 'assets/js/custom.js' %}"></script>
+                        <span class="be-comment-name">
+                          <a href="#"
+                            >{{ entry.provider.last_name }},
+                            {{entry.provider.first_name }}</a
+                          >
+                        </span>
 
-	<!-- Add your script to handle the toggle -->
-<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-<script>
-    function toggleFeedback(menuItem) {
-        // Toggle the display of the feedback section based on the clicked menu item
-        var feedbackSection = document.getElementById('feedback-section');
-        if (menuItem === 'Comfort Rooms' || menuItem === 'Auditorium' || menuItem === 'Lecture Rooms' || menuItem === 'Laboratory Rooms') {
-            feedbackSection.style.display = 'block';
+                        <p class="text-dark float-end">
+                          {{ entry.category.category_name }}
+                        </p>
+
+                        <p class="text-dark" style="margin-left: 50px">
+                          {{ entry.feedback }}
+                        </p>
+
+                        {% if entry.feedback_image %}
+                        <img
+                          src="{{ entry.feedback_image.url }}"
+                          alt=""
+                          style="width: 100px; height: 100px"
+                        />
+                        {% endif %}
+                      </div>
+                      {% endfor %}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Preloader -->
+    <div class="loader">
+      <div class="spinner-border text-light" role="status">
+        <span class="sr-only">Loading...</span>
+      </div>
+    </div>
+
+    <!-- Loader Overlay -->
+    <div class="loader-overlay"></div>
+
+    <!-- General JS Scripts -->
+    <script src="{% static 'assets/js/atrana.js' %}"></script>
+
+    <!-- JS Libraries -->
+    <script src="{% static 'assets/modules/jquery/jquery.min.js' %}"></script>
+    <script src="{% static 'assets/modules/bootstrap-5.1.3/js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'assets/modules/popper/popper.min.js' %}"></script>
+
+    <!-- Template JS Files -->
+    <script src="{% static 'assets/js/script.js' %}"></script>
+    <script src="{% static 'assets/js/custom.js' %}"></script>
+
+    <!-- Additional Script for Toggle -->
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        // Add event listeners once the document is fully loaded
+        var categoryLinks = document.querySelectorAll(
+          '[data-toggle="feedback"]'
+        );
+
+        categoryLinks.forEach(function (link) {
+          link.addEventListener("click", function (event) {
+            event.preventDefault(); // Prevent the default behavior of the link
+            var categoryName = link.dataset.category;
+            toggleFeedback(categoryName);
+          });
+        });
+      });
+
+      function toggleFeedback(category) {
+        var feedbackSection = document.getElementById("feedback-section");
+
+        if (category) {
+          // Pass the category information to the function that fetches feedback entries
+          fetchFeedbackEntries(category);
+          feedbackSection.style.display = "block";
         } else {
-            feedbackSection.style.display = 'none';
+          feedbackSection.style.display = "none";
         }
-    }
-	function closeFeedback() {
-        var feedbackSection = document.getElementById('feedback-section');
-        feedbackSection.style.display = 'none';
-    }
-</script>
-	<script>
-    // Activate Bootstrap tooltips
-    $(document).ready(function(){
+      }
+      function updateFeedbackUI(data) {
+        // Check if 'entries' property exists in the data object
+        if ("entries" in data && Array.isArray(data.entries)) {
+          // 'entries' is an array, assuming each item has 'date' and 'feedback' properties
+          data.entries.forEach(function (entry) {
+            // Create a new paragraph element
+            var feedbackElement = document.createElement("p");
+
+            // Set the text content of the paragraph with feedback information
+            feedbackElement.textContent = `${entry.date}: ${entry.feedback}`;
+
+            // Assuming you have a container element with an ID where you want to append feedback entries
+            var feedbackContainer =
+              document.getElementById("feedback-container");
+
+            // Append the paragraph element to the container
+            feedbackContainer.appendChild(feedbackElement);
+          });
+        } else {
+          // Handle the case where 'entries' property is missing or not an array
+          console.error("Invalid data format:", data);
+        }
+      }
+    </script>
+
+    <!-- Activate Bootstrap tooltips -->
+    <script>
+      $(document).ready(function () {
         $('[data-toggle="tooltip"]').tooltip();
-    });
-</script>
- </body>
+      });
+    </script>
+
+    <!-- Additional Script for Toggle -->
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        // Add event listeners once the document is fully loaded
+        var categoryLinks = document.querySelectorAll(
+          '[data-toggle="feedback"]'
+        );
+
+        categoryLinks.forEach(function (link) {
+          link.addEventListener("click", function (event) {
+            event.preventDefault(); // Prevent the default behavior of the link
+            var buildingId = link.dataset.buildingId; // Assuming you have a data attribute for buildingId
+            toggleFeedback(buildingId);
+          });
+        });
+
+        // Adding a click event listener for the "Hiraya Dashboard" link
+
+        var dashboardLink = document.querySelector(
+          '[href="{% url "dashboard" %}"]'
+        );
+        dashboardLink.addEventListener("click", function (event) {
+          event.preventDefault();
+          // Assuming -1 or any value that indicates no specific building ID for all feedback
+          toggleFeedback(-1);
+        });
+      });
+
+      function toggleFeedback(buildingId) {
+        // Toggle the display of the feedback section based on the clicked menu item
+        var feedbackSection = document.getElementById("feedback-section");
+        if (buildingId !== undefined) {
+          // Pass the buildingId information to the function that fetches feedback entries
+          fetchFeedbackEntries(buildingId);
+          feedbackSection.style.display = "block";
+        } else {
+          feedbackSection.style.display = "none";
+        }
+      }
+
+      function fetchFeedbackEntries(buildingId, category_id = null) {
+        // Assuming you have an API endpoint to fetch feedback entries for a building
+        // You may need to replace the URL with your actual backend endpoint
+        var apiUrl = `/api/feedback/?buildingId=${buildingId}`;
+
+        if (category_id !== null) {
+          apiUrl += `&category_id=${category_id}`;
+        }
+
+        fetch(apiUrl)
+          .then((response) => response.json())
+          .then((data) => {
+            // Call a function to update the UI with the fetched feedback entries
+            updateFeedbackUI(data);
+          })
+          .catch((error) => {
+            console.error("Error fetching feedback entries:", error);
+          });
+      }
+
+      function updateFeedbackUI(feedbackEntries) {
+        // Get the tbody element where feedback entries will be displayed
+        var tbody = document.getElementById("feedback-table-body");
+
+        // Clear existing entries
+        tbody.innerHTML = "";
+
+        // Loop through the feedback entries and create table rows
+        feedbackEntries.forEach((entry) => {
+          var row = document.createElement("tr");
+
+          // Create table cells for date and actions
+          var dateCell = document.createElement("td");
+          dateCell.textContent = entry.date; // Assuming date is a property of the feedback entry
+
+          var actionsCell = document.createElement("td");
+          // Create any actions/buttons you want to include in this cell
+
+          // Append cells to the row
+          row.appendChild(dateCell);
+          row.appendChild(actionsCell);
+
+          // Append the row to the tbody
+          tbody.appendChild(row);
+        });
+      }
+
+      document.addEventListener("DOMContentLoaded", function () {
+        // Add event listeners once the document is fully loaded
+        var categoryCards = document.querySelectorAll(".category-card");
+
+        categoryCards.forEach(function (card) {
+          card.addEventListener("click", function () {
+            // Get the category name from the card
+            var categoryName = card.dataset.category;
+
+            // Toggle the display of the feedback section based on the clicked category card
+            toggleFeedback(categoryName);
+          });
+        });
+      });
+
+      function toggleFeedback(category) {
+        // Toggle the display of the feedback section based on the clicked category
+        var feedbackSection = document.getElementById("feedback-section");
+
+        if (category) {
+          // Pass the category information to the function that fetches feedback entries
+          fetchFeedbackEntries(category);
+          feedbackSection.style.display = "block";
+        } else {
+          feedbackSection.style.display = "none";
+        }
+      }
+
+      function fetchFeedbackEntries(category) {
+        var apiUrl = `/api/feedback_entries/?category=${category}`;
+        var apiUrl = `/api/feedback_entries/?category=${category}`;
+
+        // Make an AJAX request to fetch feedback entries for the selected category
+        fetch(apiUrl)
+          .then((response) => response.json())
+          .then((data) => {
+            // Call a function to update the UI with the fetched feedback entries
+            updateFeedbackUI(data);
+          })
+          .catch((error) => {
+            console.error(
+              `Error fetching ${category} feedback entries:`,
+              error
+            );
+          });
+      }
+
+      function updateFeedbackUI(data) {
+        // Check if 'categories' property exists in the data object
+        if ("categories" in data && Array.isArray(data.categories)) {
+          // 'categories' is an array, assuming each item has 'date' and 'feedback' properties
+          data.categories.forEach(function (entry) {
+            // Create a new paragraph element
+            var feedbackElement = document.createElement("p");
+
+            // Set the text content of the paragraph with feedback information
+            feedbackElement.textContent = `${entry.date}: ${entry.feedback}`;
+
+            // Assuming you have a container element with an ID where you want to append feedback entries
+            var feedbackContainer =
+              document.getElementById("feedback-container");
+
+            // Append the paragraph element to the container
+            feedbackContainer.appendChild(feedbackElement);
+          });
+        } else {
+          // Handle the case where 'categories' property is missing or not an array
+          console.error("Invalid data format:", data);
+        }
+      }
+    </script>
+  </body>
 </html>

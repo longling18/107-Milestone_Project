@@ -23,11 +23,11 @@
     <!--<title>Dashboard Sidebar Menu</title>-->
   </head>
   <body>
-    <nav class="sidebar close">
+    <nav class="sidebar">
       <header>
         <div class="image-text">
           <span class="image">
-            <img src="{% static 'images/logoUniv.png' %}" alt="wewew" />
+            <img src="{% static 'images/logoUniv.png' %}" alt="pic neh!" />
           </span>
 
           <div class="text logo-text">
@@ -37,28 +37,31 @@
         </div>
       </header>
 
-      <li id="home-icon">
-        <a href="{% url 'index' %}">
-          <i class="bx bx-home icon"> Home</i>
-          <!-- Replace "bx-home" with the class of your home icon -->
-        </a>
-      </li>
-      <div class="menu-bar">
-        <div class="menu">
-          <ul class="menu-links">
-            <li class="nav-link">
-              <a href="#" onclick=" showFeedbackForm()">
-                <i class="bx bx-home-alt icon"></i>
-                <span class="text nav-text">FORM</span>
-              </a>
-            </li>
-          </ul>
-        </div>
+      <div class="side">
+        <ul class="menu-list">
+          <li id="home-icon">
+            <a href="{% url 'index' %}">
+              <button class="btn-menu">
+                <i class="bx bx-home icon"></i>
+                <span class="text nav-text">Home</span>
+              </button>
+            </a>
+          </li>
+          <li class="nav-link">
+            <a href="#" onclick="showFeedbackForm()">
+              <button class="btn-menu">
+                <i class="bx bx-note icon"></i>
+                <span class="text nav-text">Form</span>
+              </button>
+            </a>
+          </li>
+        </ul>
       </div>
+      
     </nav>
 
-    <section class="home">
-      <div class="text welcome-text animated">Time to UniVOICE it out!!</div>
+ 
+     
       <div class="container">
         <form
           id="feedback-form"
@@ -71,11 +74,13 @@
           <div class="close-box">
             <button class="close-button" onclick="closeForm()">x</button>
           </div>
+         
           <h2>Feedback Form</h2>
           <hr />
           <label class="text-capitalize" for="first_name">Firstname:</label>
           <input
             type="text"
+            placeholder="Enter first name ..."
             id="first_name"
             name="first_name"
             autocomplete="off"
@@ -84,6 +89,7 @@
           <label class="text-capitalize" for="last_name">Lastname:</label>
           <input
             type="text"
+            placeholder="Enter last name ..."
             id="last_name"
             name="last_name"
             autocomplete="off"
@@ -190,6 +196,11 @@
         </form>
       </div>
     </section>
+
+
+
+
+    
     <!-- Add this script at the end of your existing script -->
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script>
@@ -310,11 +321,10 @@
     <script>
       function showFeedbackForm(title) {
         const feedbackForm = document.getElementById("feedback-form");
-        const formTitle = feedbackForm.querySelector("h2");
+
         const closeBox = feedbackForm.querySelector(".close-box");
 
-        if (formTitle && closeBox) {
-          formTitle.innerText = title;
+        if (closeBox) {
           feedbackForm.style.display = "block";
           closeBox.style.display = "block";
 

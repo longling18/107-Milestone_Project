@@ -1,0 +1,189 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+  <head>
+
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<link
+      rel="icon"
+      href="{% static 'images/logoUniv.png' %}"
+      type="image/x-icon"
+    />
+
+	<title>Staff</title>
+
+	<!-- Bootstrap CSS-->
+	<link rel="stylesheet" href="{% static 'assets/modules/bootstrap-5.1.3/css/bootstrap.css' %}">
+	<!-- Style CSS -->
+	<link rel="stylesheet" href="{% static 'staffstyle.css' %}">
+	<!-- FontAwesome CSS-->
+	<link rel="stylesheet" href="{% static 'assets/modules/fontawesome6.1.1/css/all.css' %}">
+	<!-- Boxicons CSS-->
+	<link rel="stylesheet" href="{% static 'assets/modules/boxicons/css/boxicons.min.css' %}">
+	<!-- Apexcharts  CSS -->
+	<link rel="stylesheet" href="{% static 'assets/modules/apexcharts/apexcharts.css' %}">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css">
+
+</head>
+<body>
+  
+  <!--Topbar -->
+  <div class="topbar transition">
+	<div class="bars">
+		<button type="button" class="btn transition" id="sidebar-toggle">
+			<i class="fa fa-bars"></i>
+		</button>
+	</div>
+		<div class="menu">
+			<ul>
+				
+				  <li class="nav-item dropdown">
+					<a class="nav-link" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+					  <img src="{{ user.profile_image.url }}" alt="Profile image">
+					</a>
+					<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+						<a class="dropdown-item" href="{% url 'password_change' %}"><i class="fa fa-cog size-icon-1"></i> <span>Change Password</span></a>
+						<hr class="dropdown-divider">
+						<a class="dropdown-item" href="{% url 'logout' %}"><i class="fa fa-sign-out-alt  size-icon-1"></i> <span>Sign OUt</span></a>
+					</ul>
+				  </li>
+			</ul>
+		</div>
+	</div>
+
+	<!--Sidebar-->
+	<div class="sidebar transition overlay-scrollbars animate__animated  animate__slideInLeft">
+        <div class="sidebar-content"> 
+        	<div id="sidebar">
+			
+			<!-- Logo -->
+			<div class="logo">
+					<h2 class="mb-0"><img src="{% static 'images/logoUniv.png' %}"> UniVoice</h2>
+			</div>
+
+			<li>
+				<a href="{% url 'dashboard4' %}" class="active">
+				 <h5 class="hiraya">Kinaadman Dashboard</h5>
+				</a>
+			</li>
+
+
+        </div>
+
+       </div> 
+	</div><!-- End Sidebar-->
+
+
+	<div class="sidebar-overlay"></div>
+
+
+	<!--Content Start-->
+	<div class="content-start transition">
+		<div class="container-fluid dashboard">
+			<div class="content-header">
+				<h1>Welcome, {{request.user.first_name}}</h1>
+				<p></p>
+			</div>
+			<div class="row">
+
+				<li>
+					<a href="#" onclick="toggleFeedback('Laboratory Rooms')">
+						<i class='bx bxs-home icon' ></i> 
+						Canteen
+					</a>
+				</li>
+
+
+		<!-- Feedback Section -->
+<!-- Feedback Section -->
+<div class="col-md-12" id="feedback-section" style="display: none">
+	<div class="card">
+	  <div class="card-header">
+		<h4>User's Feedback</h4>
+		
+	  </div>
+	  <div class="card-body">
+		<div class="table-responsive">
+		  <table class="table table-striped">
+			<tbody id="feedback-table-body" class="custom-background">
+
+					
+				{% for entry in feedback_entries %}
+				<span class="time text-dark d-flex justify-content-end">
+					<i class="fa fa-clock-o"></i>
+					{{ entry.timestamp }}
+				</span>
+			<div class="border border-5 p-2 mb-5">
+
+					
+				<i class="bi bi-person-fill" style="font-size: 2rem; color: cornflowerblue;"></i>
+
+				<span class="be-comment-name">
+					<a href="#">{{ entry.provider.last_name }}, {{ entry.provider.first_name }}</a>
+				</span> 
+				
+				<p class="text-dark float-end">
+					{{ entry.category.category_name }}
+				</p>
+
+				<p class="text-dark" style="margin-left: 50px;">
+					{{ entry.feedback }}
+				  </p>
+				  {% if entry.feedback_image %}
+				  <img src="{{ entry.feedback_image.url }}" alt="" style="width: 100px; height: 100px;">
+				  {% endif %}
+			</div>
+		  {% endfor %}
+		</tbody>
+		  </table>
+		</div>
+	  </div>
+	</div>
+  </div>
+
+	<!-- Preloader -->
+	<div class="loader">
+		<div class="spinner-border text-light" role="status">
+			<span class="sr-only">Loading...</span>
+		</div>
+	</div>
+	<!-- Loader -->
+	<div class="loader-overlay"></div>
+
+	<!-- General JS Scripts -->
+	<script src="{% static 'assets/js/atrana.js' %}"></script>
+
+	<!-- JS Libraies -->
+	<script src="{% static 'assets/modules/jquery/jquery.min.js' %}"></script>
+	<script src="{% static 'assets/modules/bootstrap-5.1.3/js/bootstrap.bundle.min.js' %}"></script>
+	<script src="{% static 'assets/modules/popper/popper.min.js' %}"></script>
+
+	<!-- Chart Js -->
+	<script src="{% static 'assets/modules/apexcharts/apexcharts.js' %}"></script>
+	<script src="{% static 'assets/js/ui-apexcharts.js' %}"></script>
+
+    <!-- Template JS File -->
+	<script src="{% static 'assets/js/script.js' %}"></script>
+	<script src="{% static 'assets/js/custom.js' %}"></script>
+
+	<!-- Add your script to handle the toggle -->
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script>
+    function toggleFeedback(menuItem) {
+        // Toggle the display of the feedback section based on the clicked menu item
+        var feedbackSection = document.getElementById('feedback-section');
+        if (menuItem === 'Comfort Rooms' || menuItem === 'Auditorium' || menuItem === 'Lecture Rooms' || menuItem === 'Laboratory Rooms') {
+            feedbackSection.style.display = 'block';
+        } else {
+            feedbackSection.style.display = 'none';
+        }
+    }
+	function closeFeedback() {
+        var feedbackSection = document.getElementById('feedback-section');
+        feedbackSection.style.display = 'none';
+    }
+   </script>
+ </body>
+ </html>

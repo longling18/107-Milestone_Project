@@ -6,7 +6,7 @@ from django.contrib.auth.views import LoginView, PasswordChangeView, PasswordRes
 #from django.contrib.auth.forms import UserCreationForm
 from django.urls import reverse_lazy
 from django.urls import reverse
-from .forms import CustomLoginForm, StaffAddForm, SubmitForm, FeedbackEntryForm
+from .forms import CustomLoginForm, StaffAddForm, SubmitForm, FeedbackEntryForm, LoginForm
 from projectapp.models import CustomUser 
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.http import JsonResponse
@@ -14,6 +14,11 @@ from .models import CustomUser, FeedbackProvider, Building, Category, FeedbackEn
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import PasswordResetForm 
 import logging
+from django.shortcuts import render, get_object_or_404
+from .utils import validate_otp
+
+
+
 
 logger = logging.getLogger(__name__)
 # Create your views here
@@ -123,15 +128,147 @@ def is_not_superuser(user):
 @login_required
 @user_passes_test(is_not_superuser)
 def mydashboard(request):
+    # Assuming 'building' is the correct ForeignKey field in FeedbackEntry
+    feedback_entries_with_provider = FeedbackEntry.objects.filter(
+        building__building_id=1
+    ).select_related("category", "provider")
+
+    provider_entries = FeedbackProvider.objects.all()
+
+    return render(
+        request,
+        'registration/dashboard.html',
+        {
+            'feedback_entries': feedback_entries_with_provider,
+            'provider_entries': provider_entries
+        }
+    )
+
+
+
+def fetch_feedback_entries(request):
+    category_name = request.GET.get('category')
+    building_id = request.GET.get('building_id')
+
+    # Use get_object_or_404 to handle DoesNotExist gracefully
+    category = get_object_or_404(Category, name=category_name, building__id=building_id)
+    feedback_entries = FeedbackEntry.objects.filter(category=category, building__id=building_id)
+
+    data = []
+    for entry in feedback_entries:
+        data.append({
+            'timestamp': entry.timestamp.strftime('%d %b, %Y'),
+            'feedback_text': entry.feedback_text,
+            'provider_id': entry.provider.id,
+            'feedback_image': entry.feedback_image.url if entry.feedback_image else '',
+        })
+
+    response_data = {'data': data}
     
-    print(request.user)
-    return render(request, 'registration/dashboard.html', {'section': 'dashboard'})
+    return JsonResponse(response_data)
+
+
+def mydashboard2(request):
+    feedback_entries_with_provider = FeedbackEntry.objects.filter(
+        building__building_id=2
+    ).select_related("category", "provider")
+
+    provider_entries = FeedbackProvider.objects.all()
+
+    return render(
+        request,
+        'registration/HinangDashboard.html',
+        {
+            'feedback_entries': feedback_entries_with_provider,
+            'provider_entries': provider_entries
+        }
+    )
+
+def mydashboard3(request):
+    feedback_entries_with_provider = FeedbackEntry.objects.filter(
+        building__building_id=3
+    ).select_related("category", "provider")
+
+    provider_entries = FeedbackProvider.objects.all()
+
+    return render(
+        request,
+        'registration/VillaresDashboard.html',
+        {
+            'feedback_entries': feedback_entries_with_provider,
+            'provider_entries': provider_entries
+        }
+    )
+def mydashboard4(request):
+    feedback_entries_with_provider = FeedbackEntry.objects.filter(
+        building__building_id=4
+    ).select_related("category", "provider")
+
+    provider_entries = FeedbackProvider.objects.all()
+
+    return render(
+        request,
+        'registration/KinaadmanDashboard.html',
+        {
+            'feedback_entries': feedback_entries_with_provider,
+            'provider_entries': provider_entries
+        }
+    )
+
+def mydashboard5(request):
+    feedback_entries_with_provider = FeedbackEntry.objects.filter(
+        building__building_id=5
+    ).select_related("category", "provider")
+
+    provider_entries = FeedbackProvider.objects.all()
+
+    return render(
+        request,
+        'registration/BatokHallDashboard.html',
+        {
+            'feedback_entries': feedback_entries_with_provider,
+            'provider_entries': provider_entries
+        }
+    )
+def mydashboard6(request):
+    feedback_entries_with_provider = FeedbackEntry.objects.filter(
+        building__building_id=6
+    ).select_related("category", "provider")
+
+    provider_entries = FeedbackProvider.objects.all()
+
+    return render(
+        request,
+        'registration/IwagDashboard.html',
+        {
+            'feedback_entries': feedback_entries_with_provider,
+            'provider_entries': provider_entries
+        }
+    )
+def mydashboard7(request):
+    feedback_entries_with_provider = FeedbackEntry.objects.filter(
+        building__building_id=7
+    ).select_related("category", "provider")
+
+    provider_entries = FeedbackProvider.objects.all()
+
+    return render(
+        request,
+        'registration/MasawaDashboard.html',
+        {
+            'feedback_entries': feedback_entries_with_provider,
+            'provider_entries': provider_entries
+        }
+    )
 
 class CustomLoginView(LoginView):
-     form_class = CustomLoginForm  # Use the CustomLoginForm
-     def form_invalid(self, form):
+    form_class = CustomLoginForm  
+
+    def form_invalid(self, form):
         # Check if the reCAPTCHA checkbox was checked
         captcha_response = form.cleaned_data.get('captcha')
+        otp_token = form.cleaned_data.get('otp_token')
+        
         if not captcha_response:
             messages.error(self.request, 'Please check the reCAPTCHA below.')
             return super().form_invalid(form)
@@ -141,19 +278,38 @@ class CustomLoginView(LoginView):
         password = form.cleaned_data.get('password')
         user = authenticate(username=username, password=password)
 
+        if not validate_otp(user, otp_token):
+            messages.error(self.request, 'Incorrect OTP token. Please try again.')
+            return super().form_invalid(form)
+
         if user is None:
             messages.error(self.request, 'Incorrect username or password. Please try again.')
             return super().form_invalid(form)
 
-        messages.error(self.request, 'Please check the reCAPTCHA below.')
         return super().form_invalid(form)
 
-     def get_success_url(self):
+    def get_success_url(self):
         user = self.request.user
         if user.is_superuser:
-            return reverse ('admin_dashboard')  # Redirect superuser to the admin site
+            return reverse('admin_dashboard')  # Redirect superuser to the admin site
+        elif user.id == 11:
+            return reverse('dashboard')  # Redirect other users to the dashboard
+        elif user.id == 12:
+            return reverse('dashboard2')
+        elif user.id == 13:
+            return reverse('dashboard3')
+        elif user.id == 14:
+            return reverse('dashboard4')
+        elif user.id == 15:
+            return reverse('dashboard5')
+        elif user.id == 16:
+            return reverse('dashboard6')
+        elif user.id == 17:
+            return reverse('dashboard7')
         else:
-            return reverse ('dashboard')  # Redirect other users to the dashboard
+            return reverse('index')
+
+
 def login(request):
     return render(request, 'login.html', {'section': 'login'})
 
